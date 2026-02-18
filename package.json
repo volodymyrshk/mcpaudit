@@ -1,0 +1,24 @@
+{
+  "name": "agentaudit",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Security audit tool for MCP (Model Context Protocol) servers",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "dev": "bun run --filter @agentaudit/cli dev",
+    "build": "bun run --filter @agentaudit/cli build",
+    "test": "bun run --filter @agentaudit/cli test",
+    "lint": "eslint packages/*/src/**/*.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "Apache-2.0"
+}
