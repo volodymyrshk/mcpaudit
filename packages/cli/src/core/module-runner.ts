@@ -47,7 +47,7 @@ export class ModuleRunner {
       if (mod.mode === "active" && !activeMode) {
         if (verbose) {
           console.error(
-            `[agentaudit:runner] Skipping active module "${mod.id}" (use --active to enable)`
+            `[vs-mcpaudit:runner] Skipping active module "${mod.id}" (use --active to enable)`
           );
         }
         continue;
@@ -89,7 +89,7 @@ export class ModuleRunner {
 
         if (verbose) {
           console.error(
-            `[agentaudit:runner] Module "${mod.id}" crashed: ${errorMessage}`
+            `[vs-mcpaudit:runner] Module "${mod.id}" crashed: ${errorMessage}`
           );
         }
 

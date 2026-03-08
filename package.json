@@ -1,13 +1,13 @@
 {
-  "name": "agentaudit",
+  "name": "vs-mcpaudit",
   "private": true,
   "version": "0.0.0",
   "description": "Security audit tool for MCP (Model Context Protocol) servers",
   "workspaces": ["packages/*"],
   "scripts": {
-    "dev": "bun run --filter @agentaudit/cli dev",
-    "build": "bun run --filter @agentaudit/cli build",
-    "test": "bun run --filter @agentaudit/cli test",
+    "dev": "bun run --filter @vs-mcpaudit/cli dev",
+    "build": "bun run --filter @vs-mcpaudit/cli build",
+    "test": "bun run --filter @vs-mcpaudit/cli test",
     "lint": "eslint packages/*/src/**/*.ts",
     "typecheck": "tsc --noEmit"
   },

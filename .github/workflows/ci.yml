@@ -50,11 +50,11 @@ jobs:
         working-directory: packages/cli
 
       - name: Compile binary
-        run: bun build src/index.ts --compile --outfile agentaudit
+        run: bun build src/index.ts --compile --outfile vs-mcpaudit
         working-directory: packages/cli
 
       - name: Verify binary
-        run: ./packages/cli/agentaudit --version
+        run: ./packages/cli/vs-mcpaudit --version
 
   self-scan:
     name: Self-Scan (Dogfood)
@@ -83,4 +83,4 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results/filesystem.sarif
-          category: agentaudit-filesystem
+          category: vs-mcpaudit-filesystem

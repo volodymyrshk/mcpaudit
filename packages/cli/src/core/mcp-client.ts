@@ -53,7 +53,7 @@ export class MCPClientEngine {
     // Create MCP client
     this.client = new Client(
       {
-        name: "agentaudit",
+        name: "vs-mcpaudit",
         version: CLI_VERSION,
       },
       {
@@ -248,7 +248,7 @@ export class MCPClientEngine {
 
   private log(message: string): void {
     if (this.verbose) {
-      console.error(`[agentaudit:mcp] ${message}`);
+      console.error(`[vs-mcpaudit:mcp] ${message}`);
     }
   }
 }

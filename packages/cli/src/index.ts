@@ -9,7 +9,7 @@ const CLI_VERSION = "0.1.0-alpha.1";
 const program = new Command();
 
 program
-  .name("agentaudit")
+  .name("vs-mcpaudit")
   .description(
     "Security audit tool for MCP (Model Context Protocol) servers.\n" +
       "The only tool that actively stress-tests running MCP servers for vulnerabilities."

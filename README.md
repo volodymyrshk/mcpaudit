@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">🛡️ AgentAudit</h1>
+  <h1 align="center">🛡️ vs-mcpaudit</h1>
   <p align="center">
     <strong>Security scanner for MCP (Model Context Protocol) servers</strong>
   </p>
@@ -17,14 +17,14 @@
 
 ---
 
-## Why AgentAudit?
+## Why vs-mcpaudit?
 
 MCP servers expose tools, resources, and prompts to AI agents — but **who audits the servers?**
 
-Traditional security tools can't assess MCP-specific risks like tool poisoning, annotation trust violations, or SSRF through tool parameters. AgentAudit fills that gap with **5 specialized audit modules** that analyze both schema metadata (passive) and live server behavior (active).
+Traditional security tools can't assess MCP-specific risks like tool poisoning, annotation trust violations, or SSRF through tool parameters. vs-mcpaudit fills that gap with **5 specialized audit modules** that analyze both schema metadata (passive) and live server behavior (active).
 
 ```
-  AgentAudit Security Report
+  vs-mcpaudit Security Report
   ──────────────────────────────────────────────────────────────
 
   Server: @modelcontextprotocol/server-filesystem v0.6.2
@@ -56,26 +56,26 @@ Traditional security tools can't assess MCP-specific risks like tool poisoning, 
 
 ```bash
 # Run directly with npx
-npx agentaudit scan -s "npx -y @modelcontextprotocol/server-filesystem /tmp"
+npx vs-mcpaudit scan -s "npx -y @modelcontextprotocol/server-filesystem /tmp"
 
 # Or install globally
-npm install -g agentaudit
+npm install -g vs-mcpaudit
 
 # Or with Bun
-bun install -g agentaudit
+bun install -g vs-mcpaudit
 ```
 
 ### Build from Source
 
 ```bash
-git clone https://github.com/agentaudit/agentaudit.git
-cd agentaudit
+git clone https://github.com/vs-mcpaudit/vs-mcpaudit.git
+cd vs-mcpaudit
 bun install
 bun run build
 
 # Or compile to standalone binary
 bun run compile
-./packages/cli/agentaudit --version
+./packages/cli/vs-mcpaudit --version
 ```
 
 ## Quick Start
@@ -84,30 +84,30 @@ bun run compile
 
 ```bash
 # Basic scan (passive modules only)
-agentaudit scan -s "npx -y @modelcontextprotocol/server-filesystem /tmp"
+vs-mcpaudit scan -s "npx -y @modelcontextprotocol/server-filesystem /tmp"
 
 # Full scan with active probing (SSRF detection)
-agentaudit scan -s "npx -y @modelcontextprotocol/server-filesystem /tmp" --active
+vs-mcpaudit scan -s "npx -y @modelcontextprotocol/server-filesystem /tmp" --active
 
 # JSON output for programmatic use
-agentaudit scan -s "your-mcp-server" -f json
+vs-mcpaudit scan -s "your-mcp-server" -f json
 
 # SARIF output for GitHub Code Scanning
-agentaudit scan -s "your-mcp-server" -f sarif -o report.sarif
+vs-mcpaudit scan -s "your-mcp-server" -f sarif -o report.sarif
 
 # CI mode (no color, JSON output, non-zero exit on findings)
-agentaudit scan -s "your-mcp-server" --ci
+vs-mcpaudit scan -s "your-mcp-server" --ci
 
 # Run specific modules only
-agentaudit scan -s "your-mcp-server" -m tool-permissions transport-security
+vs-mcpaudit scan -s "your-mcp-server" -m tool-permissions transport-security
 
 # Verbose output for debugging
-agentaudit scan -s "your-mcp-server" -v
+vs-mcpaudit scan -s "your-mcp-server" -v
 ```
 
 ## Modules
 
-AgentAudit ships with 5 audit modules:
+vs-mcpaudit ships with 5 audit modules:
 
 ### 🔐 Tool Permissions Analysis (`tool-permissions`) — Passive
 
@@ -158,7 +158,7 @@ Identifies tools and resources that could leak sensitive context or be used for 
 
 ## Scoring System
 
-AgentAudit calculates a **0-100 security score** based on finding severity:
+vs-mcpaudit calculates a **0-100 security score** based on finding severity:
 
 | Severity | Score Impact | Grade Scale |
 |---|---|---|
@@ -185,11 +185,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
 
-      - name: Install AgentAudit
-        run: bun install -g agentaudit
+      - name: Install vs-mcpaudit
+        run: bun install -g vs-mcpaudit
 
       - name: Scan MCP Server
-        run: agentaudit scan -s "your-mcp-server" --ci --accept -o results.sarif
+        run: vs-mcpaudit scan -s "your-mcp-server" --ci --accept -o results.sarif
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v3
@@ -209,10 +209,10 @@ jobs:
 
 ## SARIF Output
 
-AgentAudit can output results in [SARIF](https://sarifweb.azurewebsites.net/) format for integration with GitHub Code Scanning, VS Code SARIF Viewer, and other security tools:
+vs-mcpaudit can output results in [SARIF](https://sarifweb.azurewebsites.net/) format for integration with GitHub Code Scanning, VS Code SARIF Viewer, and other security tools:
 
 ```bash
-agentaudit scan -s "your-mcp-server" -f sarif -o report.sarif
+vs-mcpaudit scan -s "your-mcp-server" -f sarif -o report.sarif
 ```
 
 SARIF reports include:

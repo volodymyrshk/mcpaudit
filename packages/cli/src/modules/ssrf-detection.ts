@@ -194,7 +194,7 @@ export class SsrfDetectionModule implements AuditModule {
         try {
           if (verbose) {
             console.error(
-              `[agentaudit:ssrf] Probing ${tool.name}.${paramName} with ${probe.description}: ${probe.payload}`
+              `[vs-mcpaudit:ssrf] Probing ${tool.name}.${paramName} with ${probe.description}: ${probe.payload}`
             );
           }
 
@@ -223,7 +223,7 @@ export class SsrfDetectionModule implements AuditModule {
           // Tool call errors are expected for blocked probes
           if (verbose) {
             console.error(
-              `[agentaudit:ssrf] Probe blocked (expected): ${probe.description} → ${err instanceof Error ? err.message : String(err)}`
+              `[vs-mcpaudit:ssrf] Probe blocked (expected): ${probe.description} → ${err instanceof Error ? err.message : String(err)}`
             );
           }
         }

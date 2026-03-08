@@ -1,15 +1,15 @@
 {
-  "name": "@agentaudit/cli",
+  "name": "@vs-mcpaudit/cli",
   "version": "0.1.0-alpha.1",
   "description": "Security audit CLI for MCP servers — the only tool that actively stress-tests running MCP servers",
   "type": "module",
   "bin": {
-    "agentaudit": "./dist/index.js"
+    "vs-mcpaudit": "./dist/index.js"
   },
   "scripts": {
     "dev": "bun run src/index.ts",
     "build": "bun build src/index.ts --outdir dist --target node",
-    "compile": "bun build src/index.ts --compile --outfile agentaudit",
+    "compile": "bun build src/index.ts --compile --outfile vs-mcpaudit",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
@@ -33,9 +33,9 @@
     "vulnerability-scanner"
   ],
   "license": "Apache-2.0",
-  "author": "AgentAudit",
+  "author": "vs-mcpaudit",
   "repository": {
     "type": "git",
-    "url": "https://github.com/agentaudit/agentaudit"
+    "url": "https://github.com/vs-mcpaudit/vs-mcpaudit"
   }
 }

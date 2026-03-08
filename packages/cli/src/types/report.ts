@@ -124,7 +124,7 @@ export interface ScanReport {
   timestamp: string;
   /** Duration of the entire scan in milliseconds */
   durationMs: number;
-  /** AgentAudit CLI version */
+  /** vs-mcpaudit CLI version */
   cliVersion: string;
   /** Transport configuration used */
   transport: TransportConfig;

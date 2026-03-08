@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "agentaudit",
+      "name": "vs-mcpaudit",
       "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^8.0.0",
         "@typescript-eslint/parser": "^8.0.0",
@@ -12,10 +12,10 @@
       },
     },
     "packages/cli": {
-      "name": "@agentaudit/cli",
+      "name": "@vs-mcpaudit/cli",
       "version": "0.1.0-alpha.1",
       "bin": {
-        "agentaudit": "./dist/index.js",
+        "vs-mcpaudit": "./dist/index.js",
       },
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.12.0",
@@ -31,7 +31,7 @@
     },
   },
   "packages": {
-    "@agentaudit/cli": ["@agentaudit/cli@workspace:packages/cli"],
+    "@vs-mcpaudit/cli": ["@vs-mcpaudit/cli@workspace:packages/cli"],
 
     "@colors/colors": ["@colors/colors@1.5.0", "", {}, "sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ=="],
 

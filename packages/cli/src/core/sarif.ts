@@ -74,7 +74,7 @@ interface SarifLog {
 }
 
 /**
- * Map AgentAudit severity to SARIF level.
+ * Map vs-mcpaudit severity to SARIF level.
  */
 function severityToLevel(
   severity: Severity
@@ -94,7 +94,7 @@ function severityToLevel(
 }
 
 /**
- * Convert an AgentAudit ScanReport to SARIF v2.1.0 format.
+ * Convert an vs-mcpaudit ScanReport to SARIF v2.1.0 format.
  */
 export function toSarif(report: ScanReport): SarifLog {
   // Build unique rules from findings
@@ -176,9 +176,9 @@ export function toSarif(report: ScanReport): SarifLog {
       {
         tool: {
           driver: {
-            name: "AgentAudit",
+            name: "vs-mcpaudit",
             version: report.cliVersion,
-            informationUri: "https://github.com/agentaudit/agentaudit",
+            informationUri: "https://github.com/vs-mcpaudit/vs-mcpaudit",
             rules: [...ruleMap.values()],
           },
         },

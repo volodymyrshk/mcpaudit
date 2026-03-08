@@ -37,15 +37,24 @@ interface ScanResult {
 }
 
 function scanServer(serverCmd: string): ScanResult {
-  const output = execSync(
-    `${CLI} scan --server "${serverCmd}" --accept --ci`,
-    {
-      cwd: "/Users/volodymyr/Projects/personal/2026/AuthForge/packages/cli",
-      timeout: TIMEOUT,
-      encoding: "utf-8",
-      stdio: ["pipe", "pipe", "pipe"],
+  let output = "";
+  try {
+    output = execSync(
+      `${CLI} scan --server "${serverCmd}" --accept --ci`,
+      {
+        cwd: "/Users/volodymyr/Projects/personal/2026/AuthForge/packages/cli",
+        timeout: TIMEOUT,
+        encoding: "utf-8",
+        stdio: ["pipe", "pipe", "pipe"],
+      }
+    );
+  } catch (err: any) {
+    if (err.stdout) {
+      output = err.stdout.toString();
+    } else {
+      throw err;
     }
-  );
+  }
   return JSON.parse(output);
 }
 

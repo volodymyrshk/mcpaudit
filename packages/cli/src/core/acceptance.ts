@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { homedir } from "node:os";
 import chalk from "chalk";
 
-const CONFIG_DIR = join(homedir(), ".agentaudit");
+const CONFIG_DIR = join(homedir(), ".vs-mcpaudit");
 const ACCEPTANCE_FILE = join(CONFIG_DIR, ".accepted");
 const CURRENT_VERSION = "1.0"; // Bump this to re-prompt
 
@@ -33,7 +33,7 @@ export async function ensureAcceptance(): Promise<boolean> {
   console.log();
   console.log(
     chalk.white(
-      "  AgentAudit is a security testing tool for MCP servers.\n" +
+      "  vs-mcpaudit is a security testing tool for MCP servers.\n" +
         "  You must only scan servers you own or have explicit\n" +
         "  authorization to test.\n"
     )
@@ -47,12 +47,12 @@ export async function ensureAcceptance(): Promise<boolean> {
   );
   console.log(
     chalk.dim(
-      "  Full legal notice: https://github.com/agentaudit/agentaudit/blob/main/LEGAL_NOTICE\n"
+      "  Full legal notice: https://github.com/vs-mcpaudit/vs-mcpaudit/blob/main/LEGAL_NOTICE\n"
     )
   );
   console.log(
     chalk.white(
-      "  By continuing, you confirm you will use AgentAudit\n" +
+      "  By continuing, you confirm you will use vs-mcpaudit\n" +
         "  only for authorized security testing.\n"
     )
   );
@@ -82,7 +82,7 @@ export async function ensureAcceptance(): Promise<boolean> {
     return true;
   }
 
-  console.log(chalk.red("  ✗ Declined. AgentAudit will not run.\n"));
+  console.log(chalk.red("  ✗ Declined. vs-mcpaudit will not run.\n"));
   return false;
 }
 
@@ -137,7 +137,7 @@ async function promptAcceptance(): Promise<boolean> {
  * Used when --accept flag is provided on the command line.
  */
 export function forceAcceptance(): void {
-  const CONFIG_DIR_PATH = join(homedir(), ".agentaudit");
+  const CONFIG_DIR_PATH = join(homedir(), ".vs-mcpaudit");
   if (!existsSync(CONFIG_DIR_PATH)) {
     mkdirSync(CONFIG_DIR_PATH, { recursive: true });
   }

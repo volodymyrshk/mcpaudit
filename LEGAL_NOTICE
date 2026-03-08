@@ -1,7 +1,7 @@
 AGENTAUDIT — LEGAL NOTICE & AUTHORIZED USE POLICY
 ===================================================
 
-AgentAudit is a security testing tool designed to identify vulnerabilities
+vs-mcpaudit is a security testing tool designed to identify vulnerabilities
 in MCP (Model Context Protocol) servers. This tool is provided for
 AUTHORIZED SECURITY TESTING ONLY.
 
@@ -15,7 +15,7 @@ BY USING THIS SOFTWARE, YOU AGREE TO THE FOLLOWING:
    your jurisdiction.
 
 2. RESPONSIBLE USE
-   You will not use AgentAudit to:
+   You will not use vs-mcpaudit to:
    - Attack, disrupt, or damage systems you do not own or control
    - Exfiltrate data from systems without authorization
    - Develop exploits for malicious purposes
@@ -29,12 +29,12 @@ BY USING THIS SOFTWARE, YOU AGREE TO THE FOLLOWING:
 
 4. ASSUMPTION OF RISK
    Security testing inherently involves risk. The authors and contributors
-   of AgentAudit are not liable for any damage caused by the use or misuse
+   of vs-mcpaudit are not liable for any damage caused by the use or misuse
    of this tool. Use at your own risk.
 
 5. COMPLIANCE
-   You are responsible for ensuring your use of AgentAudit complies with
+   You are responsible for ensuring your use of vs-mcpaudit complies with
    all applicable laws, regulations, and organizational policies.
 
-This notice does not modify the Apache 2.0 license under which AgentAudit
+This notice does not modify the Apache 2.0 license under which vs-mcpaudit
 is distributed. See LICENSE for the full license text.

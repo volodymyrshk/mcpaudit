@@ -41,7 +41,7 @@ function outputTerminal(report: ScanReport): void {
 
   // Header
   console.log();
-  console.log(chalk.bold.cyan("  AgentAudit Security Report"));
+  console.log(chalk.bold.cyan("  vs-mcpaudit Security Report"));
   console.log(chalk.dim("  ─".repeat(30)));
   console.log();
 
