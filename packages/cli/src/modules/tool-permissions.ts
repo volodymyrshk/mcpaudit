@@ -4,7 +4,6 @@ import {
   type AuditModule,
   type ModuleContext,
   type CheckResult,
-  type Finding,
   type ToolInfo,
 } from "../types/index.js";
 
@@ -213,9 +212,8 @@ export class ToolPermissionsModule implements AuditModule {
 
   private analyzeToolSchema(tool: ToolInfo): CheckResult[] {
     const checks: CheckResult[] = [];
-    const schema = tool.inputSchema;
 
-    if (!schema || typeof schema !== "object") {
+    if (!tool.inputSchema || typeof tool.inputSchema !== "object") {
       checks.push({
         id: `TP-004-${tool.name}`,
         name: `Schema validation: ${tool.name}`,
@@ -234,12 +232,12 @@ export class ToolPermissionsModule implements AuditModule {
           toolName: tool.name,
         },
       });
-      return checks;
+      return checks; // Skip further schema validation
     }
 
     // Analyze properties if present
     const properties =
-      (schema as Record<string, unknown>).properties as
+      (tool.inputSchema as Record<string, unknown>).properties as
         | Record<string, Record<string, unknown>>
         | undefined;
 
