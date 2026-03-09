@@ -6,6 +6,7 @@ import {
   type CheckResult,
   type ToolInfo,
 } from "../types/index.js";
+import { URL_PARAM_PATTERNS } from "../utils/patterns.js";
 
 /**
  * SSRF canary domains — if the server resolves/fetches these, it proves
@@ -41,10 +42,7 @@ const SSRF_PROBES = [
   { payload: "http://172.16.0.1:80", category: "internal-network", description: "172.16.x.x range" },
 ];
 
-/**
- * Patterns that suggest a URL parameter is accepted by a tool.
- */
-const URL_PARAM_PATTERNS = /^(url|uri|endpoint|href|link|src|webhook|callback|redirect|target|destination|fetch_url|request_url)$/i;
+// Removed URL_PARAM_PATTERNS from here, moved to utils/patterns.ts
 
 /**
  * SSRF Detection Module (Active).
@@ -185,7 +183,7 @@ export class SsrfDetectionModule implements AuditModule {
       probesByCategory.set(probe.category, list);
     }
 
-    for (const [category, probes] of probesByCategory) {
+    for (const [, probes] of probesByCategory) {
       let categoryHit = false;
 
       for (const probe of probes) {
