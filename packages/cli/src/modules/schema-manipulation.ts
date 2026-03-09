@@ -154,6 +154,9 @@ export class SchemaManipulationModule implements AuditModule {
     checks.push(...this.checkSuspiciousDefaults(tools));
 
     // ── Check 4: Check for suspicious schema structures ────────────────
+    // TODO(post-release): We currently only check top-level properties for nested objects.
+    // Deeply nested schemas (e.g., properties -> object -> properties -> array) might bypass 
+    // the maxItems/additionalProperties checks. Need a recursive schema walker.
     checks.push(...this.checkSuspiciousSchemas(tools));
 
     // ── Check 5: Description length anomalies ──────────────────────────
