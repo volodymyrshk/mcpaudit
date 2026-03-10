@@ -1,5 +1,7 @@
 import { Severity, type ScanReport, type Finding } from "../types/index.js";
 
+
+
 /**
  * SARIF (Static Analysis Results Interchange Format) v2.1.0 output.
  *
@@ -10,7 +12,11 @@ import { Severity, type ScanReport, type Finding } from "../types/index.js";
  * - Any SARIF-compatible security dashboard
  *
  * Spec: https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html
+ * 
  */
+
+
+
 
 const CLI_VERSION = "0.1.0-alpha.1";
 const SARIF_SCHEMA =

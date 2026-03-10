@@ -56,8 +56,8 @@ const CONTEXT_ACCESS_PATTERNS = [
   },
 ];
 
-// FIXME: kinda aggressive on standard token/uuid names tbh. prolly need to check 
-// if the description actually says "read" or "get" otherwise it's gonna flag everything
+// FIXME: sort of aggressive on standard token/uuid names haha . Probablly need to check 
+// if the description actually says 'read" or "get' otherwise itßs gonna flag everything
 
 /**
  * Parameter patterns that suggest data exfiltration capability.
@@ -95,19 +95,19 @@ export class ContextExtractionModule implements AuditModule {
     const checks: CheckResult[] = [];
     const { tools } = context.capabilities;
 
-    // ── Check 1: Identify outbound data sinks ──────────────────────────
+    // ── Check 1: Identify outbound data sinks 
     checks.push(...this.identifyExfilSinks(tools));
 
-    // ── Check 2: Identify context access tools ─────────────────────────
+    // ── Check 2: Identify context access tools 
     checks.push(...this.identifyContextAccess(tools));
 
-    // ── Check 3: Cross-tool exfil chains ───────────────────────────────
+    // ── Check 3: Cross-tool exfil chains 
     checks.push(this.detectExfilChains(tools));
 
-    // ── Check 4: Exfil-capable parameters ──────────────────────────────
+    // ── Check 4: Exfil-capable parameters
     checks.push(...this.checkExfilParameters(tools));
 
-    // ── Check 5: Prompt resource exposure ──────────────────────────────
+    // ── Check 5: Prompt resource exposure
     checks.push(this.checkPromptExposure(context));
 
     return checks;
@@ -294,8 +294,8 @@ export class ContextExtractionModule implements AuditModule {
     for (const tool of tools) {
       const properties =
         (tool.inputSchema as Record<string, unknown>)?.properties as
-          | Record<string, Record<string, unknown>>
-          | undefined;
+        | Record<string, Record<string, unknown>>
+        | undefined;
 
       if (!properties) continue;
 
@@ -333,19 +333,19 @@ export class ContextExtractionModule implements AuditModule {
         message: `${toolsWithExfilParams.length} tool(s) have parameters suggesting data exfiltration capability`,
         finding: hasDestination
           ? {
-              id: "CE-004",
-              module: this.id,
-              severity: Severity.MEDIUM,
-              title: "Tools with user-controlled destination parameters",
-              description:
-                "Tools accept destination parameters (to, recipient, endpoint, webhook_url) that " +
-                "allow AI agents to specify where data is sent. A prompt injection could redirect " +
-                "sensitive data to attacker-controlled endpoints.",
-              evidence: { toolsWithExfilParams },
-              remediation:
-                "Hardcode or allowlist permitted destinations. Never allow AI agents to " +
-                "specify arbitrary URLs, email addresses, or endpoints for outbound data.",
-            }
+            id: "CE-004",
+            module: this.id,
+            severity: Severity.MEDIUM,
+            title: "Tools with user-controlled destination parameters",
+            description:
+              "Tools accept destination parameters (to, recipient, endpoint, webhook_url) that " +
+              "allow AI agents to specify where data is sent. A prompt injection could redirect " +
+              "sensitive data to attacker-controlled endpoints.",
+            evidence: { toolsWithExfilParams },
+            remediation:
+              "Hardcode or allowlist permitted destinations. Never allow AI agents to " +
+              "specify arbitrary URLs, email addresses, or endpoints for outbound data.",
+          }
           : undefined,
       });
     }

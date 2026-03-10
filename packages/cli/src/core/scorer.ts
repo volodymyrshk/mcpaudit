@@ -18,6 +18,8 @@ import {
  *
  * A well-maintained server with no CRITICAL/HIGH issues should score 70+.
  */
+
+
 const SEVERITY_WEIGHTS: Record<Severity, number> = {
   [Severity.CRITICAL]: 25,
   [Severity.HIGH]: 15,

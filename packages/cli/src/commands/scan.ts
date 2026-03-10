@@ -103,7 +103,7 @@ export async function executeScan(options: ScanOptions): Promise<void> {
   const spinner = isTerminal ? ora() : null;
 
   try {
-    // ── Step 1: Connect to MCP server ──────────────────────────────────
+    // ── Step 1: Connect to MCP server 
     spinner?.start("Connecting to MCP server...");
 
     const { command, args } = parseServerCommand(options.server);
@@ -117,10 +117,10 @@ export async function executeScan(options: ScanOptions): Promise<void> {
 
     spinner?.succeed(
       `Connected to ${capabilities.serverInfo.name} v${capabilities.serverInfo.version} ` +
-        `(${capabilities.tools.length} tools, ${capabilities.resources.length} resources, ${capabilities.prompts.length} prompts)`
+      `(${capabilities.tools.length} tools, ${capabilities.resources.length} resources, ${capabilities.prompts.length} prompts)`
     );
 
-    // ── Step 2: Select modules ─────────────────────────────────────────
+    // ── Step 2 Select modules 
     let modules = getAvailableModules();
 
     // Filter by requested modules
@@ -136,7 +136,7 @@ export async function executeScan(options: ScanOptions): Promise<void> {
       }
     }
 
-    // ── Step 3: Run modules ────────────────────────────────────────────
+    // ── Step 3: Run modules
     spinner?.start(`Running ${modules.length} audit module(s)...`);
 
     const runner = new ModuleRunner();
@@ -165,7 +165,7 @@ export async function executeScan(options: ScanOptions): Promise<void> {
       },
     });
 
-    // ── Step 4: Calculate score and build report ───────────────────────
+    // ── Step 4: Calculate score and build report 
     const summary = calculateScore(moduleResults);
     const allFindings = moduleResults.flatMap((r) => r.findings);
     const durationMs = Math.round(performance.now() - startTime);
@@ -189,10 +189,10 @@ export async function executeScan(options: ScanOptions): Promise<void> {
       summary,
     };
 
-    // ── Step 5: Output report ──────────────────────────────────────────
+    // ── Step 5: Output report
     outputReport(report, options.format);
 
-    // ── Step 6: Save to file if --output specified ─────────────────────
+    // ── Step 6: Save to file if --output specified
     if (options.output) {
       const outputPath = options.output;
       let fileContent: string;
@@ -210,7 +210,7 @@ export async function executeScan(options: ScanOptions): Promise<void> {
       }
     }
 
-    // ── Step 7: Exit code based on findings ────────────────────────────
+    // ── Step 7 - Exit code based on findings 
     if (summary.findingsBySeverity.CRITICAL > 0) {
       process.exitCode = 3;
     } else if (summary.failed > 0) {

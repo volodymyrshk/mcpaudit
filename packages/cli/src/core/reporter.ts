@@ -50,7 +50,7 @@ function outputTerminal(report: ScanReport): void {
   console.log(chalk.bold("  Protocol: ") + server.protocolVersion);
   console.log(
     chalk.bold("  Capabilities: ") +
-      `${server.tools.length} tools, ${server.resources.length} resources, ${server.prompts.length} prompts`
+    `${server.tools.length} tools, ${server.resources.length} resources, ${server.prompts.length} prompts`
   );
   console.log(chalk.bold("  Scan Duration: ") + `${report.durationMs}ms`);
   console.log();
@@ -169,7 +169,7 @@ function outputScore(score: number): void {
 }
 
 /**
- * Format findings for detailed output (used in verbose mode).
+ * Format findings for detailed output used in verbose mode.
  */
 export function formatFinding(finding: Finding): string {
   const severityColor = {
