@@ -1,27 +1,26 @@
 <p align="center">
   <h1 align="center">🛡️ vs-mcpaudit</h1>
   <p align="center">
-    <strong>Security scanner for MCP (Model Context Protocol) servers</strong>
+    <strong>security scanner for MCP (Model Context Protocol) servers</strong>
   </p>
   <p align="center">
-    The only tool that actively stress-tests running MCP servers for vulnerabilities.
+    the only tool that actually stress-tests running mcp servers for vulnerabilities.
   </p>
   <p align="center">
-    <a href="#installation">Installation</a> •
-    <a href="#quick-start">Quick Start</a> •
-    <a href="#modules">Modules</a> •
-    <a href="#ci-cd">CI/CD</a> •
-    <a href="#sarif-output">SARIF</a>
+    <a href="#installation">install</a> •
+    <a href="#quick-start">quick start</a> •
+    <a href="#modules">modules</a> •
+    <a href="#ci-cd">ci/cd</a>
   </p>
 </p>
 
 ---
 
-## Why vs-mcpaudit?
+## why vs-mcpaudit?
 
-MCP servers expose tools, resources, and prompts to AI agents — but **who audits the servers?**
+mcp servers expose tools, resources, and prompts to AI agents — but **who audits the servers??**
 
-Traditional security tools can't assess MCP-specific risks like tool poisoning, annotation trust violations, or SSRF through tool parameters. vs-mcpaudit fills that gap with **5 specialized audit modules** that analyze both schema metadata (passive) and live server behavior (active).
+traditional security tools can't assess mcp-specific risks like tool poisoning, annotation trust violations, or ssrf through tool parameters. vs-mcpaudit fills that gap with **5 specialized audit modules** that analyze both schema metadata and live server behavior (yeah it actively probes things).
 
 ```
   vs-mcpaudit Security Report
@@ -105,56 +104,56 @@ vs-mcpaudit scan -s "your-mcp-server" -m tool-permissions transport-security
 vs-mcpaudit scan -s "your-mcp-server" -v
 ```
 
-## Modules
+## modules
 
-vs-mcpaudit ships with 5 audit modules:
+vs-mcpaudit ships with 5 audit modules so far:
 
-### 🔐 Tool Permissions Analysis (`tool-permissions`) — Passive
+### 🔐 tool permissions analysis (`tool-permissions`) 
 
-Analyzes tool schemas for over-permissioning, dangerous patterns, and annotation trust issues.
+looks at tool schemas for over-permissioning, dangerous patterns, and annotation issues. tbh a lot of servers fail this one.
 
-| Check | What It Detects |
+| check | what it detects |
 |---|---|
-| TP-001 | Large tool surface (>20 tools) |
-| TP-002 | Missing tool descriptions |
-| TP-003 | Dangerous tool names (command execution, destructive ops, network access) |
-| TP-004 | Missing input schemas |
-| TP-005 | Unconstrained parameters (path traversal, injection, SSRF risks) |
-| TP-006 | Missing annotations (readOnlyHint, destructiveHint) |
-| TP-007 | Contradictory annotations (e.g., `delete_*` marked `readOnlyHint: true`) |
+| TP-001 | massive tool surface (>20 tools) |
+| TP-002 | missing tool descriptions |
+| TP-003 | dangerous tool names (command exec, destructive ops, network access) |
+| TP-004 | missing input schemas |
+| TP-005 | unconstrained parameters (path traversal, injection, ssrf risks) |
+| TP-006 | missing annotations (readOnlyHint, etc) |
+| TP-007 | contradictory annotations (e.g., `delete_*` marked `readOnlyHint: true`) |
 | TP-008 | `additionalProperties: true` allowing arbitrary input injection |
 
-### 🌐 SSRF Detection (`ssrf-detection`) — Active
+### 🌐 ssrf detection (`ssrf-detection`) — active
 
-Probes tools with URL parameters using controlled SSRF payloads. Tests internal network access, cloud metadata endpoints (AWS/GCP/Azure), protocol smuggling, and IP encoding bypasses.
+probes tools with url parameters using controlled ssrf payloads. tests internal network access, cloud metadata endpoints, protocol smuggling, etc.
 
-| Check | What It Detects |
+| check | what it detects |
 |---|---|
-| SSRF-001 | Tools accepting URL parameters |
-| SSRF-010 | Successful SSRF probes (loopback, cloud metadata, protocol smuggling) |
+| SSRF-001 | tools accepting url parameters |
+| SSRF-010 | successful ssrf probes (loopback, metadata, protocol smuggling) |
 
-**Severity escalation:** Cloud metadata access → CRITICAL, Internal network → HIGH, Protocol smuggling → HIGH
+**severity:** cloud metadata access → CRITICAL, internal network → HIGH, protocol smuggling → HIGH
 
-### 🔒 Transport Security (`transport-security`) — Passive
+### 🔒 transport security (`transport-security`) 
 
-Analyzes server capability declarations and transport configuration.
+checks server capability declarations and transport config.
 
-| Check | What It Detects |
+| check | what it detects |
 |---|---|
-| TS-001 | Missing capability declarations |
-| TS-002 | Sampling capability (server can request LLM completions) |
-| TS-003 | Roots capability (filesystem path discovery) |
-| TS-004 | Dynamic tool registration (tool poisoning / rug pull vector) |
-| TS-005 | Sensitive resource exposure (env, secrets, credentials in URIs) |
-| TS-006 | Unknown/non-standard protocol versions |
+| TS-001 | missing capability declarations |
+| TS-002 | sampling capability (server can request LLM completions) |
+| TS-003 | roots capability (filesystem path discovery) |
+| TS-004 | dynamic tool registration (tool poisoning vector) |
+| TS-005 | sensitive resource exposure (env, secrets in URIs) |
+| TS-006 | weird/non-standard protocol versions |
 
-### 🧬 Schema Manipulation (`schema-manipulation`) — Passive
+### 🧬 schema manipulation (`schema-manipulation`) 
 
-Detects tools that could be used for injection attacks through schema weaknesses.
+detects tools that could be used for injection attacks through schema weaknesses.
 
-### 🔍 Context Extraction (`context-extraction`) — Passive
+### 🔍 context extraction (`context-extraction`) 
 
-Identifies tools and resources that could leak sensitive context or be used for data exfiltration.
+identifies tools and resources that could leak sensitive context or be used for data exfiltration.
 
 ## Scoring System
 
