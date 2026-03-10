@@ -56,9 +56,8 @@ const CONTEXT_ACCESS_PATTERNS = [
   },
 ];
 
-// FIXME: The regex above might be too aggressive on standard UUID/token 
-// parameter names even when the tool itself isn't accessing credentials. 
-// We should probably check if the tool description mentions "read" or "get" too.
+// FIXME: kinda aggressive on standard token/uuid names tbh. prolly need to check 
+// if the description actually says "read" or "get" otherwise it's gonna flag everything
 
 /**
  * Parameter patterns that suggest data exfiltration capability.

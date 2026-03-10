@@ -128,8 +128,8 @@ export class MCPClientEngine {
 
     try {
       do {
-        // Note: The MCP spec says pagination cursors are optional, but some Python reference servers 
-        // will crash or infinitely loop if we pass an empty string cursor. Pass undefined instead.
+        // ugh the python reference server crashes if we pass an empty string cursor 
+        // even though the spec says it's optional. just passing undefined to stop the infinite loop
         const result = await this.client.listTools(
           cursor ? { cursor } : undefined
         );
