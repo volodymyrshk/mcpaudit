@@ -1,10 +1,10 @@
 <p align="center">
-  <h1 align="center">🛡️ vs-mcpaudit</h1>
+  <h1 align="center">vs-mcpaudit by Volodymyr Shkarban</h1>
   <p align="center">
-    <strong>security scanner for MCP (Model Context Protocol) servers</strong>
+    <strong>Security scanner for MCP (Model Context Protocol) servers</strong>
   </p>
   <p align="center">
-    the only tool that actually stress-tests running mcp servers for vulnerabilities.
+    The only tool that actually stress-tests running MCP servers for vulnerabilities!!
   </p>
   <p align="center">
     <a href="#installation">install</a> •
@@ -108,7 +108,7 @@ vs-mcpaudit scan -s "your-mcp-server" -v
 
 vs-mcpaudit ships with 5 audit modules so far:
 
-### 🔐 tool permissions analysis (`tool-permissions`) 
+### tool permissions analysis (`tool-permissions`) 
 
 looks at tool schemas for over-permissioning, dangerous patterns, and annotation issues. tbh a lot of servers fail this one.
 
@@ -123,7 +123,7 @@ looks at tool schemas for over-permissioning, dangerous patterns, and annotation
 | TP-007 | contradictory annotations (e.g., `delete_*` marked `readOnlyHint: true`) |
 | TP-008 | `additionalProperties: true` allowing arbitrary input injection |
 
-### 🌐 ssrf detection (`ssrf-detection`) — active
+### ssrf detection (`ssrf-detection`) — active
 
 probes tools with url parameters using controlled ssrf payloads. tests internal network access, cloud metadata endpoints, protocol smuggling, etc.
 
@@ -134,7 +134,7 @@ probes tools with url parameters using controlled ssrf payloads. tests internal 
 
 **severity:** cloud metadata access → CRITICAL, internal network → HIGH, protocol smuggling → HIGH
 
-### 🔒 transport security (`transport-security`) 
+### transport security (`transport-security`) 
 
 checks server capability declarations and transport config.
 
@@ -147,11 +147,11 @@ checks server capability declarations and transport config.
 | TS-005 | sensitive resource exposure (env, secrets in URIs) |
 | TS-006 | weird/non-standard protocol versions |
 
-### 🧬 schema manipulation (`schema-manipulation`) 
+### schema manipulation (`schema-manipulation`) 
 
 detects tools that could be used for injection attacks through schema weaknesses.
 
-### 🔍 context extraction (`context-extraction`) 
+### context extraction (`context-extraction`) 
 
 identifies tools and resources that could leak sensitive context or be used for data exfiltration.
 
@@ -274,5 +274,4 @@ bun run compile
 ```
 
 ## License
-
 Apache-2.0
