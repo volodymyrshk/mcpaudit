@@ -59,6 +59,10 @@ program
     "Save report to file (use .sarif extension for SARIF format)"
   )
   .option(
+    "--compliance <frameworks...>",
+    "Enable compliance mapping (owasp, nist, atlas, or all)"
+  )
+  .option(
     "--accept",
     "Accept the legal notice (for non-interactive environments)",
     false
@@ -89,6 +93,7 @@ program
       verbose: opts.verbose,
       timeout: parseInt(opts.timeout, 10),
       output: opts.output,
+      compliance: opts.compliance,
     });
   });
 
@@ -106,6 +111,7 @@ program
     console.log("  schema-manipulation   Detects prompt injection in tool descriptions        [passive]");
     console.log("  context-extraction    Detects data exfiltration chains and context leaks   [passive]");
     console.log("  ssrf-detection        Probes URL tools for SSRF vulnerabilities            [active]");
+    console.log("  active-fuzzer         Fuzzes tool parameters with adversarial payloads         [active]");
     console.log();
     console.log("  Active modules require --active flag to enable.");
     console.log();

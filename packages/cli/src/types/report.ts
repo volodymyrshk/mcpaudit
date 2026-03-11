@@ -136,4 +136,12 @@ export interface ScanReport {
   findings: Finding[];
   /** Report summary and score */
   summary: ReportSummary;
+  /** Optional compliance summary */
+  compliance?: {
+    owasp: Record<string, number>;
+    nist: Record<string, number>;
+    atlas: Record<string, number>;
+    mappedFindings: number;
+    unmappedFindings: number;
+  };
 }

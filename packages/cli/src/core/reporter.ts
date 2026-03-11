@@ -63,6 +63,9 @@ function outputTerminal(report: ScanReport): void {
   // Summary
   outputSummary(summary);
 
+  // Compliance mapping
+  outputCompliance(report);
+
   // Security score
   outputScore(summary.securityScore);
   console.log();
@@ -154,6 +157,47 @@ function outputSummary(summary: typeof ScanReport.prototype extends never ? neve
     }
     console.log();
   }
+}
+
+function outputCompliance(report: ScanReport): void {
+  const compliance = report.compliance;
+  if (!compliance) return;
+
+  console.log(chalk.bold("  Compliance Mapping:"));
+  console.log(chalk.dim("  ─".repeat(30)));
+  console.log();
+
+  // OWASP Top 10
+  if (Object.keys(compliance.owasp).length > 0) {
+    console.log(chalk.bold("  OWASP Top 10 2021:"));
+    for (const [category, count] of Object.entries(compliance.owasp).sort((a, b) => b[1] - a[1])) {
+      console.log(chalk.yellow(`    ${category}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
+    }
+    console.log();
+  }
+
+  // NIST 800-53
+  if (Object.keys(compliance.nist).length > 0) {
+    console.log(chalk.bold("  NIST 800-53 Rev 5:"));
+    for (const [control, count] of Object.entries(compliance.nist).sort((a, b) => b[1] - a[1])) {
+      console.log(chalk.cyan(`    ${control}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
+    }
+    console.log();
+  }
+
+  // MITRE ATLAS
+  if (Object.keys(compliance.atlas).length > 0) {
+    console.log(chalk.bold("  MITRE ATLAS:"));
+    for (const [technique, count] of Object.entries(compliance.atlas).sort((a, b) => b[1] - a[1])) {
+      console.log(chalk.magenta(`    ${technique}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
+    }
+    console.log();
+  }
+
+  console.log(
+    chalk.dim(`  ${compliance.mappedFindings} finding(s) mapped, ${compliance.unmappedFindings} unmapped`)
+  );
+  console.log();
 }
 
 function outputScore(score: number): void {

@@ -102,6 +102,7 @@ export class ToolPermissionsModule implements AuditModule {
           evidence: { toolCount: count },
           remediation:
             "Consider reducing the number of exposed tools to only those required for the intended use case. Use tool filtering or separate server profiles.",
+          cweId: "CWE-250",
         },
       };
     }
@@ -144,6 +145,7 @@ export class ToolPermissionsModule implements AuditModule {
         },
         remediation:
           "Add clear, accurate descriptions to all tools explaining their purpose, side effects, and any security implications.",
+        cweId: "CWE-1059",
       },
     };
   }
@@ -181,6 +183,15 @@ export class ToolPermissionsModule implements AuditModule {
         categories.set(dt.category, list);
       }
 
+      const cweMap: Record<string, string> = {
+        "command-execution": "CWE-78",
+        "destructive": "CWE-862",
+        "write-operations": "CWE-862",
+        "network-access": "CWE-918",
+        "database-access": "CWE-89",
+        "elevated-access": "CWE-269",
+      };
+
       for (const [category, toolNames] of categories) {
         const severity =
           category === "command-execution" || category === "elevated-access"
@@ -202,6 +213,7 @@ export class ToolPermissionsModule implements AuditModule {
             description: `${toolNames.length} tool(s) have names suggesting ${category} capabilities. These tools may pose elevated security risks if not properly constrained.`,
             evidence: { category, tools: toolNames },
             remediation: `Review these tools for appropriate input validation, access controls, and documentation of security implications. Consider restricting tool availability via MCP server configuration.`,
+            cweId: cweMap[category] ?? "CWE-250",
           },
         });
       }
@@ -230,6 +242,7 @@ export class ToolPermissionsModule implements AuditModule {
           remediation:
             "Define a strict JSON Schema for the tool's input parameters with appropriate type constraints, enums, and patterns.",
           toolName: tool.name,
+          cweId: "CWE-20",
         },
       });
       return checks; // Skip further schema validation
@@ -294,6 +307,7 @@ export class ToolPermissionsModule implements AuditModule {
           remediation:
             "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
           toolName: tool.name,
+          cweId: "CWE-20",
         },
       });
     } else if (Object.keys(properties).length > 0) {
@@ -334,6 +348,7 @@ export class ToolPermissionsModule implements AuditModule {
           },
           remediation:
             "Add annotations to all tools: readOnlyHint for read-only tools, destructiveHint for tools that modify state, and openWorldHint for tools that access external systems.",
+          cweId: "CWE-1059",
         },
       });
     } else if (tools.length > 0) {
@@ -391,6 +406,7 @@ export class ToolPermissionsModule implements AuditModule {
           evidence: { suspiciousAnnotations },
           remediation:
             "Review and correct tool annotations to accurately reflect tool behavior. A tool that modifies state must not have readOnlyHint=true. Tools with openWorldHint=true and URL parameters need URL allowlisting.",
+          cweId: "CWE-345",
         },
       });
     } else if (tools.some((t) => !!t.annotations)) {
@@ -441,6 +457,7 @@ export class ToolPermissionsModule implements AuditModule {
         evidence: { tools: toolsWithAdditional },
         remediation:
           'Set additionalProperties to false in all tool input schemas. Only defined properties with explicit types should be accepted. Example: { "additionalProperties": false }',
+        cweId: "CWE-20",
       },
     };
   }

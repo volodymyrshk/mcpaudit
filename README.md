@@ -35,7 +35,7 @@ vs-mcpaudit is distributed as a standalone CLI tool. You can run it directly via
 
 ## Core Modules
 
-vs-mcpaudit features five specialized audit modules designed to uncover common MCP security pitfalls:
+vs-mcpaudit features six specialized audit modules designed to uncover common MCP security pitfalls:
 
 ### Tool Permissions (`tool-permissions`)
 Analyzes tool schemas for over-permissioning, dangerous naming patterns, and annotation trust issues.
@@ -44,6 +44,10 @@ Analyzes tool schemas for over-permissioning, dangerous naming patterns, and ann
 ### SSRF Detection (`ssrf-detection`)
 **Active Scanning Module.** Probes tools with URL parameters using controlled SSRF payloads.
 - **Detections:** Successful loopback access, cloud metadata endpoint exposure (AWS/GCP/Azure), and protocol smuggling.
+
+### Active Parameter Fuzzing (`active-fuzzer`)
+**Active Scanning Module.** Fuzzes tool parameters with adversarial payloads to test input validation and sanitation.
+- **Detections:** Command injection (CWE-78), Path traversal (CWE-22), SQL injection (CWE-89), and XSS reflection (CWE-79).
 
 ### Transport Security (`transport-security`)
 Evaluates server capability declarations and transport-layer configurations.
@@ -73,11 +77,17 @@ vs-mcpaudit is designed to run in automated pipelines. Use the `--ci` flag for n
 
 ## Output Formats
 
-| Format | Description | Use Case |
-|---|---|---|
 | `terminal` | Rich, color-coded interactive report | Local development and manual auditing |
 | `json` | Structured machine-readable data | Scripting and custom integrations |
 | `sarif` | Static Analysis Results Interchange Format | GitHub Code Scanning & IDE integrations |
+
+## Compliance Mapping
+
+vs-mcpaudit can map security findings to industry-standard compliance frameworks using the `--compliance` flag.
+
+- **OWASP Top 10 2021**: Maps findings to standard web security categories.
+- **NIST 800-53 Rev 5**: Maps findings to federal security controls.
+- **MITRE ATLAS**: Maps findings to adversarial AI techniques and tactics.
 
 ## Reporting Issues
 

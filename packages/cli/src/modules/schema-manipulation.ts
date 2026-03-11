@@ -233,6 +233,7 @@ export class SchemaManipulationModule implements AuditModule {
             "and expected output. Remove any behavioral directives, system instructions, or " +
             "manipulation attempts. AI agent clients should sanitize or flag tool descriptions " +
             "before including them in prompts.",
+          cweId: "CWE-94",
         },
       });
     }
@@ -314,6 +315,7 @@ export class SchemaManipulationModule implements AuditModule {
           remediation:
             "Parameter descriptions should only describe the expected input format and semantics. " +
             "Remove any behavioral directives or manipulation patterns.",
+          cweId: "CWE-94",
         },
       });
     }
@@ -403,6 +405,7 @@ export class SchemaManipulationModule implements AuditModule {
             "Review all default values in tool schemas. Default values should be simple, " +
             "safe strings that don't contain URLs, shell commands, or encoded data. " +
             "Remove or replace suspicious defaults.",
+          cweId: "CWE-1188",
         },
       });
     }
@@ -439,6 +442,7 @@ export class SchemaManipulationModule implements AuditModule {
                 "Tighten the tool's input schema: require necessary fields, constrain nested objects " +
                 "with explicit properties, add maxItems to arrays, and set additionalProperties to false.",
               toolName: tool.name,
+              cweId: "CWE-20",
             },
           });
         }
@@ -522,6 +526,7 @@ export class SchemaManipulationModule implements AuditModule {
         remediation:
           "Review long tool descriptions for hidden instructions. Keep descriptions concise " +
           "and focused on the tool's purpose. Consider length limits for tool descriptions.",
+        cweId: "CWE-400",
       },
     };
   }

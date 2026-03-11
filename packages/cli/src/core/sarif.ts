@@ -1,4 +1,8 @@
 import { Severity, type ScanReport, type Finding } from "../types/index.js";
+import { COMPLIANCE_MAPPINGS } from "../compliance/compliance-mappings.js";
+
+/** Quick lookup from CWE ID to compliance framework references. */
+const CWE_COMPLIANCE_MAP = new Map(COMPLIANCE_MAPPINGS.map(m => [m.cweId, m]));
 
 
 
@@ -127,12 +131,18 @@ export function toSarif(report: ScanReport): SarifLog {
           severity: finding.severity,
           module: finding.module,
           ...(finding.cweId ? { "security-severity": cweToScore(finding.cweId) } : {}),
-          tags: [
-            "security",
-            "mcp",
-            finding.module,
-            ...(finding.cweId ? [finding.cweId] : []),
-          ],
+          tags: (() => {
+            const compliance = finding.cweId ? CWE_COMPLIANCE_MAP.get(finding.cweId) : undefined;
+            return [
+              "security",
+              "mcp",
+              finding.module,
+              ...(finding.cweId ? [finding.cweId] : []),
+              ...(compliance?.owasp ?? []),
+              ...(compliance?.nist.map(n => `NIST:${n}`) ?? []),
+              ...(compliance?.atlas.map(a => `ATLAS:${a}`) ?? []),
+            ];
+          })(),
         },
       });
     }
@@ -219,13 +229,27 @@ export function toSarif(report: ScanReport): SarifLog {
  */
 function cweToScore(cweId: string): string {
   const scores: Record<string, string> = {
-    "CWE-918": "9.0", // SSRF
-    "CWE-78": "9.8", // OS Command Injection
-    "CWE-89": "9.8", // SQL Injection
-    "CWE-22": "7.5", // Path Traversal
-    "CWE-79": "6.1", // XSS
-    "CWE-200": "5.3", // Information Exposure
-    "CWE-732": "5.3", // Incorrect Permission Assignment
+    "CWE-918": "9.0",   // SSRF
+    "CWE-78": "9.8",    // OS Command Injection
+    "CWE-89": "9.8",    // SQL Injection
+    "CWE-94": "9.0",    // Code Injection
+    "CWE-22": "7.5",    // Path Traversal
+    "CWE-79": "6.1",    // XSS
+    "CWE-200": "5.3",   // Information Exposure
+    "CWE-201": "5.3",   // Sensitive Data in Sent Data
+    "CWE-250": "4.0",   // Unnecessary Privileges
+    "CWE-269": "8.0",   // Improper Privilege Management
+    "CWE-345": "6.5",   // Insufficient Verification of Data Authenticity
+    "CWE-400": "5.3",   // Uncontrolled Resource Consumption
+    "CWE-441": "7.5",   // Unintended Proxy
+    "CWE-494": "7.5",   // Code Download Without Integrity Check
+    "CWE-522": "7.0",   // Insufficiently Protected Credentials
+    "CWE-732": "5.3",   // Incorrect Permission Assignment
+    "CWE-757": "5.3",   // Less-Secure Algorithm Selection
+    "CWE-862": "6.5",   // Missing Authorization
+    "CWE-1059": "3.0",  // Insufficient Technical Documentation
+    "CWE-1188": "6.0",  // Hard-Coded Network Resource Init
+    "CWE-20": "7.5",    // Improper Input Validation
   };
   return scores[cweId] ?? "5.0";
 }

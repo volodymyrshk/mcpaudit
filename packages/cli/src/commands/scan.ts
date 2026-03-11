@@ -9,8 +9,10 @@ import { toSarif } from "../core/sarif.js";
 import { ToolPermissionsModule } from "../modules/tool-permissions.js";
 import { TransportSecurityModule } from "../modules/transport-security.js";
 import { SsrfDetectionModule } from "../modules/ssrf-detection.js";
+import { ActiveFuzzerModule } from "../modules/active-fuzzer.js";
 import { SchemaManipulationModule } from "../modules/schema-manipulation.js";
 import { ContextExtractionModule } from "../modules/context-extraction.js";
+import { enrichFindings, generateComplianceSummary, type ComplianceFinding } from "../compliance/compliance-enricher.js";
 import type { AuditModule, ScanReport, TransportConfig } from "../types/index.js";
 
 const CLI_VERSION = "0.1.0-alpha.1";
@@ -32,6 +34,8 @@ export interface ScanOptions {
   timeout: number;
   /** Output file path for saving the report */
   output?: string;
+  /** Compliance frameworks to map (owasp, nist, atlas, or all) */
+  compliance?: string[];
 }
 
 /**
@@ -88,6 +92,7 @@ function getAvailableModules(): AuditModule[] {
     new SchemaManipulationModule(),
     new ContextExtractionModule(),
     new SsrfDetectionModule(),
+    new ActiveFuzzerModule(),
   ];
 }
 
@@ -170,6 +175,14 @@ export async function executeScan(options: ScanOptions): Promise<void> {
     const allFindings = moduleResults.flatMap((r) => r.findings);
     const durationMs = Math.round(performance.now() - startTime);
 
+    // ── Step 4b: Compliance enrichment (if --compliance flag set)
+    let complianceFindings: ComplianceFinding[] | undefined;
+    let complianceSummary;
+    if (options.compliance && options.compliance.length > 0) {
+      complianceFindings = enrichFindings(allFindings);
+      complianceSummary = generateComplianceSummary(complianceFindings);
+    }
+
     const transportConfig: TransportConfig = {
       type: options.transport,
       command,
@@ -187,6 +200,7 @@ export async function executeScan(options: ScanOptions): Promise<void> {
       modules: moduleResults,
       findings: allFindings,
       summary,
+      ...(complianceSummary ? { compliance: complianceSummary } : {}),
     };
 
     // ── Step 5: Output report

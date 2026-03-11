@@ -69,6 +69,7 @@ export class TransportSecurityModule implements AuditModule {
           evidence: { declaredCapabilities: declaredCaps },
           remediation:
             "Servers should explicitly declare their capabilities (tools, resources, prompts) during initialization to enable proper client-side security decisions.",
+          cweId: "CWE-1059",
         },
       });
     } else {
@@ -109,6 +110,7 @@ export class TransportSecurityModule implements AuditModule {
           remediation:
             "Only grant sampling capability to fully trusted servers. Implement client-side guards: " +
             "rate limiting on sampling requests, content filtering on prompts, and user approval for sampling calls.",
+          cweId: "CWE-441",
         },
       };
     }
@@ -148,6 +150,7 @@ export class TransportSecurityModule implements AuditModule {
             "Ensure roots are scoped to the minimum necessary directories. " +
             "Never expose sensitive paths (home directories, system directories). " +
             "Monitor root change notifications if listChanged is enabled.",
+          cweId: "CWE-200",
         },
       };
     }
@@ -185,6 +188,7 @@ export class TransportSecurityModule implements AuditModule {
             "Clients should re-validate the tool list after each tools/list_changed notification. " +
             "Consider implementing a tool allowlist that restricts which tools can be called " +
             "regardless of dynamic changes. Alert users when the tool list changes mid-session.",
+          cweId: "CWE-494",
         },
       };
     }
@@ -240,6 +244,7 @@ export class TransportSecurityModule implements AuditModule {
             "Remove or restrict access to resources containing sensitive data. " +
             "Use resource templates with authentication requirements for sensitive endpoints. " +
             "Never expose raw environment variables, credentials, or configuration files as MCP resources.",
+          cweId: "CWE-200",
         },
       };
     }
@@ -260,6 +265,7 @@ export class TransportSecurityModule implements AuditModule {
           evidence: { resourceCount: resources.length },
           remediation:
             "Review all exposed resources and restrict to those required for the intended use case.",
+          cweId: "CWE-250",
         },
       };
     }
@@ -293,6 +299,7 @@ export class TransportSecurityModule implements AuditModule {
           remediation:
             "Verify the server is using a standard MCP protocol version. " +
             "Non-standard versions may have undocumented behavior or missing security features.",
+          cweId: "CWE-757",
         },
       };
     }

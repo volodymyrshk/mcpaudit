@@ -157,6 +157,7 @@ export class ContextExtractionModule implements AuditModule {
             "Restrict outbound tools to specific allowlisted destinations. " +
             "Implement content filtering to prevent sensitive data from being included in outbound payloads. " +
             "Require user confirmation for all data-sending operations.",
+          cweId: "CWE-200",
         },
       });
     }
@@ -218,6 +219,7 @@ export class ContextExtractionModule implements AuditModule {
             "Minimize the context exposed to MCP tools. Never pass full system prompts or " +
             "conversation history to tool calls. Use scoped tokens instead of raw credentials. " +
             "Implement data loss prevention (DLP) checks on tool inputs and outputs.",
+          cweId: hasCredentialAccess ? "CWE-522" : hasPromptAccess ? "CWE-200" : "CWE-200",
         },
       });
     }
@@ -280,6 +282,7 @@ export class ContextExtractionModule implements AuditModule {
           "Never expose both on the same MCP server. If both are required, implement " +
           "server-side data flow controls that prevent tool outputs from being passed as " +
           "inputs to outbound tools without user review.",
+        cweId: "CWE-200",
       },
     };
   }
@@ -345,6 +348,7 @@ export class ContextExtractionModule implements AuditModule {
             remediation:
               "Hardcode or allowlist permitted destinations. Never allow AI agents to " +
               "specify arbitrary URLs, email addresses, or endpoints for outbound data.",
+            cweId: "CWE-201",
           }
           : undefined,
       });
@@ -400,6 +404,7 @@ export class ContextExtractionModule implements AuditModule {
             "Review all exposed prompts for sensitive information. Remove debug and admin " +
             "prompts from production server configurations. Use server-side access controls " +
             "to restrict prompt visibility.",
+          cweId: "CWE-200",
         },
       };
     }
