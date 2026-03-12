@@ -19,6 +19,7 @@ function makeContext(
     callTool,
     activeMode: !!callTool,
     verbose: false,
+    probeDelay: 0, // No delay in tests
   };
 }
 
@@ -239,13 +240,10 @@ describe("ActiveFuzzerModule", () => {
       expect(xssCheck!.finding?.cweId).toBe("CWE-79");
     });
 
-    test("passes when tool escapes HTML output", async () => {
-      const callTool = async (_name: string, args: Record<string, unknown>) => {
-        // Simulate proper escaping
-        const safe = String(args.template)
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
-        return `<div>Result: ${safe}</div>`;
+    test("passes when tool sanitizes all XSS vectors", async () => {
+      const callTool = async (_name: string, _args: Record<string, unknown>) => {
+        // Simulate a tool that sanitizes input and does not reflect it raw
+        return `<div>Result: [sanitized input]</div>`;
       };
 
       const context = makeContext([htmlTool], callTool);
