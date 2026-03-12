@@ -18,6 +18,10 @@ export interface RunnerOptions {
   activeMode?: boolean;
   /** Verbose logging */
   verbose?: boolean;
+  /** Timeout per active probe in ms */
+  probeTimeout?: number;
+  /** Delay between active probes in ms */
+  probeDelay?: number;
   /** Progress callback */
   onProgress?: (moduleId: string, status: "start" | "complete" | "error") => void;
 }
@@ -37,6 +41,8 @@ export class ModuleRunner {
       callTool,
       activeMode = false,
       verbose = false,
+      probeTimeout,
+      probeDelay,
       onProgress,
     } = options;
 
@@ -62,6 +68,8 @@ export class ModuleRunner {
           callTool,
           activeMode,
           verbose,
+          probeTimeout,
+          probeDelay,
         };
 
         const checks = await mod.run(context);

@@ -1,0 +1,1682 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/main/sarif-2.1/schema/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "vs-mcpaudit",
+          "version": "0.1.0-alpha.1",
+          "informationUri": "https://github.com/vs-mcpaudit/vs-mcpaudit",
+          "rules": [
+            {
+              "id": "TP-003-write-operations",
+              "name": "Toolswithwriteoperationsnamingpatterns",
+              "shortDescription": {
+                "text": "Tools with write-operations naming patterns"
+              },
+              "fullDescription": {
+                "text": "2 tool(s) have names suggesting write-operations capabilities. These tools may pose elevated security risks if not properly constrained."
+              },
+              "help": {
+                "text": "Review these tools for appropriate input validation, access controls, and documentation of security implications. Consider restricting tool availability via MCP server configuration.",
+                "markdown": "**Remediation:** Review these tools for appropriate input validation, access controls, and documentation of security implications. Consider restricting tool availability via MCP server configuration."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "severity": "LOW",
+                "module": "tool-permissions",
+                "security-severity": "5.3",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-732",
+                  "NIST SP 800-171:3.1.2",
+                  "SOC 2 TSC:CC6.3",
+                  "OWASP ASVS:V4.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-read_file",
+              "name": "Unconstrainedparametersintoolreadfile",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"read_file\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-read_text_file",
+              "name": "Unconstrainedparametersintoolreadtextfile",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"read_text_file\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-read_media_file",
+              "name": "Unconstrainedparametersintoolreadmediafile",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"read_media_file\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-write_file",
+              "name": "Unconstrainedparametersintoolwritefile",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"write_file\""
+              },
+              "fullDescription": {
+                "text": "Tool has 2 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-edit_file",
+              "name": "Unconstrainedparametersintooleditfile",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"edit_file\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-create_directory",
+              "name": "Unconstrainedparametersintoolcreatedirectory",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"create_directory\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-list_directory",
+              "name": "Unconstrainedparametersintoollistdirectory",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"list_directory\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-list_directory_with_sizes",
+              "name": "Unconstrainedparametersintoollistdirectorywithsizes",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"list_directory_with_sizes\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-directory_tree",
+              "name": "Unconstrainedparametersintooldirectorytree",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"directory_tree\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-search_files",
+              "name": "Unconstrainedparametersintoolsearchfiles",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"search_files\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TP-005-get_file_info",
+              "name": "Unconstrainedparametersintoolgetfileinfo",
+              "shortDescription": {
+                "text": "Unconstrained parameters in tool \"get_file_info\""
+              },
+              "fullDescription": {
+                "text": "Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+              },
+              "help": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters.",
+                "markdown": "**Remediation:** Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "tool-permissions",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "tool-permissions",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "TS-004",
+              "name": "Serversupportsdynamictoollistchanges",
+              "shortDescription": {
+                "text": "Server supports dynamic tool list changes"
+              },
+              "fullDescription": {
+                "text": "The server has listChanged=true for tools, meaning it can dynamically add or remove tools during a session. This is a known attack vector: a server could initially present benign tools to pass security review, then inject malicious tools mid-session (tool poisoning / rug pull attack)."
+              },
+              "help": {
+                "text": "Clients should re-validate the tool list after each tools/list_changed notification. Consider implementing a tool allowlist that restricts which tools can be called regardless of dynamic changes. Alert users when the tool list changes mid-session.",
+                "markdown": "**Remediation:** Clients should re-validate the tool list after each tools/list_changed notification. Consider implementing a tool allowlist that restricts which tools can be called regardless of dynamic changes. Alert users when the tool list changes mid-session."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "transport-security",
+                "security-severity": "6.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "transport-security",
+                  "CWE-345",
+                  "NIST SP 800-171:3.14.2",
+                  "SOC 2 TSC:CC7.1",
+                  "OWASP ASVS:V10.3.2"
+                ]
+              }
+            },
+            {
+              "id": "SM-004-read_multiple_files-unconstrained-arrays",
+              "name": "Suspiciousschemastructureinreadmultiplefilesunconstrainedarrays",
+              "shortDescription": {
+                "text": "Suspicious schema structure in \"read_multiple_files\": unconstrained-arrays"
+              },
+              "fullDescription": {
+                "text": "Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+              },
+              "help": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false.",
+                "markdown": "**Remediation:** Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "severity": "LOW",
+                "module": "schema-manipulation",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "schema-manipulation",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "SM-004-edit_file-unconstrained-arrays",
+              "name": "Suspiciousschemastructureineditfileunconstrainedarrays",
+              "shortDescription": {
+                "text": "Suspicious schema structure in \"edit_file\": unconstrained-arrays"
+              },
+              "fullDescription": {
+                "text": "Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+              },
+              "help": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false.",
+                "markdown": "**Remediation:** Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "severity": "LOW",
+                "module": "schema-manipulation",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "schema-manipulation",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "SM-004-directory_tree-unconstrained-arrays",
+              "name": "Suspiciousschemastructureindirectorytreeunconstrainedarrays",
+              "shortDescription": {
+                "text": "Suspicious schema structure in \"directory_tree\": unconstrained-arrays"
+              },
+              "fullDescription": {
+                "text": "Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+              },
+              "help": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false.",
+                "markdown": "**Remediation:** Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "severity": "LOW",
+                "module": "schema-manipulation",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "schema-manipulation",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "SM-004-search_files-unconstrained-arrays",
+              "name": "Suspiciousschemastructureinsearchfilesunconstrainedarrays",
+              "shortDescription": {
+                "text": "Suspicious schema structure in \"search_files\": unconstrained-arrays"
+              },
+              "fullDescription": {
+                "text": "Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+              },
+              "help": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false.",
+                "markdown": "**Remediation:** Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "severity": "LOW",
+                "module": "schema-manipulation",
+                "security-severity": "7.5",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "schema-manipulation",
+                  "CWE-20",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.1",
+                  "OWASP ASVS:V5.1.3"
+                ]
+              }
+            },
+            {
+              "id": "CE-001",
+              "name": "Toolscapableofsendingdatatoexternaldestinations",
+              "shortDescription": {
+                "text": "Tools capable of sending data to external destinations"
+              },
+              "fullDescription": {
+                "text": "2 tool(s) have names suggesting they can send data externally. These tools could potentially be used by a manipulated AI agent to exfiltrate conversation context, system prompts, or user data to an attacker-controlled endpoint."
+              },
+              "help": {
+                "text": "Restrict outbound tools to specific allowlisted destinations. Implement content filtering to prevent sensitive data from being included in outbound payloads. Require user confirmation for all data-sending operations.",
+                "markdown": "**Remediation:** Restrict outbound tools to specific allowlisted destinations. Implement content filtering to prevent sensitive data from being included in outbound payloads. Require user confirmation for all data-sending operations."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "severity": "LOW",
+                "module": "context-extraction",
+                "security-severity": "5.3",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "context-extraction",
+                  "CWE-200",
+                  "NIST SP 800-171:3.1.3",
+                  "SOC 2 TSC:CC6.5",
+                  "OWASP ASVS:V7.4.1"
+                ]
+              }
+            },
+            {
+              "id": "CE-004",
+              "name": "Toolswithusercontrolleddestinationparameters",
+              "shortDescription": {
+                "text": "Tools with user-controlled destination parameters"
+              },
+              "fullDescription": {
+                "text": "Tools accept destination parameters (to, recipient, endpoint, webhook_url) that allow AI agents to specify where data is sent. A prompt injection could redirect sensitive data to attacker-controlled endpoints."
+              },
+              "help": {
+                "text": "Hardcode or allowlist permitted destinations. Never allow AI agents to specify arbitrary URLs, email addresses, or endpoints for outbound data.",
+                "markdown": "**Remediation:** Hardcode or allowlist permitted destinations. Never allow AI agents to specify arbitrary URLs, email addresses, or endpoints for outbound data."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "context-extraction",
+                "security-severity": "5.3",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "context-extraction",
+                  "CWE-201",
+                  "NIST SP 800-171:3.1.3",
+                  "SOC 2 TSC:CC6.5",
+                  "OWASP ASVS:V7.4.1"
+                ]
+              }
+            },
+            {
+              "id": "SSRF-001",
+              "name": "ToolsacceptURLparameters",
+              "shortDescription": {
+                "text": "Tools accept URL parameters"
+              },
+              "fullDescription": {
+                "text": "1 tool(s) accept URL parameters, which are potential SSRF vectors if not properly validated."
+              },
+              "help": {
+                "text": "Implement URL allowlisting, block private IP ranges, and validate URL schemes (allow only https://).",
+                "markdown": "**Remediation:** Implement URL allowlisting, block private IP ranges, and validate URL schemes (allow only https://)."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "severity": "LOW",
+                "module": "ssrf-detection",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "ssrf-detection"
+                ]
+              }
+            },
+            {
+              "id": "AF-006-read_file",
+              "name": "Noinputlengthlimitsontoolreadfile",
+              "shortDescription": {
+                "text": "No input length limits on tool \"read_file\""
+              },
+              "fullDescription": {
+                "text": "Tool \"read_file\" parameter \"path\" accepted oversized inputs (10k-ascii, 100k-ascii, 5k-unicode-skull) without returning validation errors. This may indicate missing input length validation, which can lead to denial-of-service or memory exhaustion attacks."
+              },
+              "help": {
+                "text": "Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level.",
+                "markdown": "**Remediation:** Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "active-fuzzer",
+                "security-severity": "5.3",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "active-fuzzer",
+                  "CWE-400",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.6",
+                  "OWASP ASVS:V11.1.4"
+                ]
+              }
+            },
+            {
+              "id": "AF-006-read_text_file",
+              "name": "Noinputlengthlimitsontoolreadtextfile",
+              "shortDescription": {
+                "text": "No input length limits on tool \"read_text_file\""
+              },
+              "fullDescription": {
+                "text": "Tool \"read_text_file\" parameter \"path\" accepted oversized inputs (10k-ascii, 100k-ascii, 5k-unicode-skull) without returning validation errors. This may indicate missing input length validation, which can lead to denial-of-service or memory exhaustion attacks."
+              },
+              "help": {
+                "text": "Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level.",
+                "markdown": "**Remediation:** Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "active-fuzzer",
+                "security-severity": "5.3",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "active-fuzzer",
+                  "CWE-400",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.6",
+                  "OWASP ASVS:V11.1.4"
+                ]
+              }
+            },
+            {
+              "id": "AF-006-read_media_file",
+              "name": "Noinputlengthlimitsontoolreadmediafile",
+              "shortDescription": {
+                "text": "No input length limits on tool \"read_media_file\""
+              },
+              "fullDescription": {
+                "text": "Tool \"read_media_file\" parameter \"path\" accepted oversized inputs (10k-ascii, 100k-ascii, 5k-unicode-skull) without returning validation errors. This may indicate missing input length validation, which can lead to denial-of-service or memory exhaustion attacks."
+              },
+              "help": {
+                "text": "Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level.",
+                "markdown": "**Remediation:** Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "severity": "MEDIUM",
+                "module": "active-fuzzer",
+                "security-severity": "5.3",
+                "tags": [
+                  "security",
+                  "mcp",
+                  "active-fuzzer",
+                  "CWE-400",
+                  "NIST SP 800-171:3.13.1",
+                  "SOC 2 TSC:CC6.6",
+                  "OWASP ASVS:V11.1.4"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "TP-003-write-operations",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "text": "Tools with write-operations naming patterns: 2 tool(s) have names suggesting write-operations capabilities. These tools may pose elevated security risks if not properly constrained."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "secure-filesystem-server",
+                  "kind": "mcpServer",
+                  "fullyQualifiedName": "secure-filesystem-server"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Review these tools for appropriate input validation, access controls, and documentation of security implications. Consider restricting tool availability via MCP server configuration."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "LOW",
+            "module": "tool-permissions",
+            "evidence": {
+              "category": "write-operations",
+              "tools": [
+                "write_file",
+                "create_directory"
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-read_file",
+          "ruleIndex": 1,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"read_file\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "read_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/read_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "read_file",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-read_text_file",
+          "ruleIndex": 2,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"read_text_file\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "read_text_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/read_text_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "read_text_file",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-read_media_file",
+          "ruleIndex": 3,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"read_media_file\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "read_media_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/read_media_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "read_media_file",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-write_file",
+          "ruleIndex": 4,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"write_file\": Tool has 2 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "write_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/write_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "write_file",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                },
+                {
+                  "param": "content",
+                  "risk": "xss",
+                  "issues": [
+                    "Unconstrained string parameter \"content\" suggests xss risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-edit_file",
+          "ruleIndex": 5,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"edit_file\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "edit_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/edit_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "edit_file",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-create_directory",
+          "ruleIndex": 6,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"create_directory\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "create_directory",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/create_directory"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "create_directory",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-list_directory",
+          "ruleIndex": 7,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"list_directory\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "list_directory",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/list_directory"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "list_directory",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-list_directory_with_sizes",
+          "ruleIndex": 8,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"list_directory_with_sizes\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "list_directory_with_sizes",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/list_directory_with_sizes"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "list_directory_with_sizes",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-directory_tree",
+          "ruleIndex": 9,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"directory_tree\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "directory_tree",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/directory_tree"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "directory_tree",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-search_files",
+          "ruleIndex": 10,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"search_files\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "search_files",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/search_files"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "search_files",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TP-005-get_file_info",
+          "ruleIndex": 11,
+          "level": "warning",
+          "message": {
+            "text": "Unconstrained parameters in tool \"get_file_info\": Tool has 1 parameter(s) that suggest security-sensitive operations but lack proper input validation constraints (enum, pattern, maxLength)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "get_file_info",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/get_file_info"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Add appropriate constraints to input schema: use 'enum' for fixed values, 'pattern' for format validation, 'maxLength' to prevent oversized inputs, and avoid accepting arbitrary strings for security-sensitive parameters."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "tool-permissions",
+            "evidence": {
+              "toolName": "get_file_info",
+              "parameters": [
+                {
+                  "param": "path",
+                  "risk": "path-traversal",
+                  "issues": [
+                    "Unconstrained string parameter \"path\" suggests path-traversal risk"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "TS-004",
+          "ruleIndex": 12,
+          "level": "warning",
+          "message": {
+            "text": "Server supports dynamic tool list changes: The server has listChanged=true for tools, meaning it can dynamically add or remove tools during a session. This is a known attack vector: a server could initially present benign tools to pass security review, then inject malicious tools mid-session (tool poisoning / rug pull attack)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "secure-filesystem-server",
+                  "kind": "mcpServer",
+                  "fullyQualifiedName": "secure-filesystem-server"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Clients should re-validate the tool list after each tools/list_changed notification. Consider implementing a tool allowlist that restricts which tools can be called regardless of dynamic changes. Alert users when the tool list changes mid-session."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "transport-security",
+            "evidence": {
+              "toolsCapability": {
+                "listChanged": true
+              }
+            }
+          }
+        },
+        {
+          "ruleId": "SM-004-read_multiple_files-unconstrained-arrays",
+          "ruleIndex": 13,
+          "level": "note",
+          "message": {
+            "text": "Suspicious schema structure in \"read_multiple_files\": unconstrained-arrays: Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "read_multiple_files",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/read_multiple_files"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "LOW",
+            "module": "schema-manipulation",
+            "evidence": {
+              "toolName": "read_multiple_files",
+              "checkId": "unconstrained-arrays"
+            }
+          }
+        },
+        {
+          "ruleId": "SM-004-edit_file-unconstrained-arrays",
+          "ruleIndex": 14,
+          "level": "note",
+          "message": {
+            "text": "Suspicious schema structure in \"edit_file\": unconstrained-arrays: Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "edit_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/edit_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "LOW",
+            "module": "schema-manipulation",
+            "evidence": {
+              "toolName": "edit_file",
+              "checkId": "unconstrained-arrays"
+            }
+          }
+        },
+        {
+          "ruleId": "SM-004-directory_tree-unconstrained-arrays",
+          "ruleIndex": 15,
+          "level": "note",
+          "message": {
+            "text": "Suspicious schema structure in \"directory_tree\": unconstrained-arrays: Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "directory_tree",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/directory_tree"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "LOW",
+            "module": "schema-manipulation",
+            "evidence": {
+              "toolName": "directory_tree",
+              "checkId": "unconstrained-arrays"
+            }
+          }
+        },
+        {
+          "ruleId": "SM-004-search_files-unconstrained-arrays",
+          "ruleIndex": 16,
+          "level": "note",
+          "message": {
+            "text": "Suspicious schema structure in \"search_files\": unconstrained-arrays: Tool accepts arrays without item type constraints or size limits. This structural pattern in the tool's input schema may allow unexpected data to be passed to the tool."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "search_files",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/search_files"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Tighten the tool's input schema: require necessary fields, constrain nested objects with explicit properties, add maxItems to arrays, and set additionalProperties to false."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "LOW",
+            "module": "schema-manipulation",
+            "evidence": {
+              "toolName": "search_files",
+              "checkId": "unconstrained-arrays"
+            }
+          }
+        },
+        {
+          "ruleId": "CE-001",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "Tools capable of sending data to external destinations: 2 tool(s) have names suggesting they can send data externally. These tools could potentially be used by a manipulated AI agent to exfiltrate conversation context, system prompts, or user data to an attacker-controlled endpoint."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "secure-filesystem-server",
+                  "kind": "mcpServer",
+                  "fullyQualifiedName": "secure-filesystem-server"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Restrict outbound tools to specific allowlisted destinations. Implement content filtering to prevent sensitive data from being included in outbound payloads. Require user confirmation for all data-sending operations."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "LOW",
+            "module": "context-extraction",
+            "evidence": {
+              "sinks": [
+                {
+                  "tool": "write_file",
+                  "category": "write-sink",
+                  "description": "Tool writes data to a destination"
+                },
+                {
+                  "tool": "create_directory",
+                  "category": "write-sink",
+                  "description": "Tool writes data to a destination"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "CE-004",
+          "ruleIndex": 18,
+          "level": "warning",
+          "message": {
+            "text": "Tools with user-controlled destination parameters: Tools accept destination parameters (to, recipient, endpoint, webhook_url) that allow AI agents to specify where data is sent. A prompt injection could redirect sensitive data to attacker-controlled endpoints."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "secure-filesystem-server",
+                  "kind": "mcpServer",
+                  "fullyQualifiedName": "secure-filesystem-server"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Hardcode or allowlist permitted destinations. Never allow AI agents to specify arbitrary URLs, email addresses, or endpoints for outbound data."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "context-extraction",
+            "evidence": {
+              "toolsWithExfilParams": [
+                {
+                  "tool": "write_file",
+                  "params": [
+                    {
+                      "name": "content",
+                      "risk": "content-injection"
+                    }
+                  ]
+                },
+                {
+                  "tool": "move_file",
+                  "params": [
+                    {
+                      "name": "destination",
+                      "risk": "destination-control"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "SSRF-001",
+          "ruleIndex": 19,
+          "level": "note",
+          "message": {
+            "text": "Tools accept URL parameters: 1 tool(s) accept URL parameters, which are potential SSRF vectors if not properly validated."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "secure-filesystem-server",
+                  "kind": "mcpServer",
+                  "fullyQualifiedName": "secure-filesystem-server"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Implement URL allowlisting, block private IP ranges, and validate URL schemes (allow only https://)."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "LOW",
+            "module": "ssrf-detection",
+            "evidence": {
+              "tools": [
+                {
+                  "name": "move_file",
+                  "paramName": "destination"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "AF-006-read_file",
+          "ruleIndex": 20,
+          "level": "warning",
+          "message": {
+            "text": "No input length limits on tool \"read_file\": Tool \"read_file\" parameter \"path\" accepted oversized inputs (10k-ascii, 100k-ascii, 5k-unicode-skull) without returning validation errors. This may indicate missing input length validation, which can lead to denial-of-service or memory exhaustion attacks."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "read_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/read_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "active-fuzzer",
+            "evidence": {
+              "toolName": "read_file",
+              "paramName": "path",
+              "acceptedPayloads": [
+                "10k-ascii",
+                "100k-ascii",
+                "5k-unicode-skull"
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "AF-006-read_text_file",
+          "ruleIndex": 21,
+          "level": "warning",
+          "message": {
+            "text": "No input length limits on tool \"read_text_file\": Tool \"read_text_file\" parameter \"path\" accepted oversized inputs (10k-ascii, 100k-ascii, 5k-unicode-skull) without returning validation errors. This may indicate missing input length validation, which can lead to denial-of-service or memory exhaustion attacks."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "read_text_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/read_text_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "active-fuzzer",
+            "evidence": {
+              "toolName": "read_text_file",
+              "paramName": "path",
+              "acceptedPayloads": [
+                "10k-ascii",
+                "100k-ascii",
+                "5k-unicode-skull"
+              ]
+            }
+          }
+        },
+        {
+          "ruleId": "AF-006-read_media_file",
+          "ruleIndex": 22,
+          "level": "warning",
+          "message": {
+            "text": "No input length limits on tool \"read_media_file\": Tool \"read_media_file\" parameter \"path\" accepted oversized inputs (10k-ascii, 100k-ascii, 5k-unicode-skull) without returning validation errors. This may indicate missing input length validation, which can lead to denial-of-service or memory exhaustion attacks."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "name": "read_media_file",
+                  "kind": "mcpTool",
+                  "fullyQualifiedName": "secure-filesystem-server/read_media_file"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Enforce maximum input length limits on all string parameters. Return clear validation errors for inputs that exceed acceptable bounds. Consider rate limiting and request size limits at the transport level."
+              }
+            }
+          ],
+          "properties": {
+            "severity": "MEDIUM",
+            "module": "active-fuzzer",
+            "evidence": {
+              "toolName": "read_media_file",
+              "paramName": "path",
+              "acceptedPayloads": [
+                "10k-ascii",
+                "100k-ascii",
+                "5k-unicode-skull"
+              ]
+            }
+          }
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "startTimeUtc": "2026-03-12T00:45:27.479Z",
+          "endTimeUtc": "2026-03-12T00:45:34.531Z",
+          "properties": {
+            "serverName": "secure-filesystem-server",
+            "serverVersion": "0.2.0",
+            "protocolVersion": "2025-11-05",
+            "toolCount": 14,
+            "securityScore": 57
+          }
+        }
+      ],
+      "properties": {
+        "securityScore": 57,
+        "totalChecks": 58,
+        "transport": {
+          "type": "stdio",
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-filesystem",
+            "/tmp"
+          ]
+        }
+      }
+    }
+  ]
+}

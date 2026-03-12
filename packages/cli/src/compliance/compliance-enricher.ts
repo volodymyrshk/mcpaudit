@@ -1,56 +1,36 @@
-import type { Finding } from "../types/index.js";
-import { COMPLIANCE_MAPPINGS, type ComplianceMapping } from "./compliance-mappings.js";
-
-/**
- * Enriched finding with compliance framework references.
- */
-export interface ComplianceFinding extends Finding {
-  compliance?: {
-    owasp: string[];
-    nist: string[];
-    atlas: string[];
-  };
-}
+import type { Finding, ComplianceControl } from "../types/index.js";
+import { CWE_COMPLIANCE_MAP } from "../data/compliance-mappings.js";
 
 /**
  * Summary of compliance framework coverage from a scan.
  */
 export interface ComplianceSummary {
-  /** OWASP Top 10 2021 categories hit */
-  owasp: Record<string, number>;
-  /** NIST 800-53 controls hit */
+  /** NIST SP 800-171 controls hit */
   nist: Record<string, number>;
-  /** MITRE ATLAS techniques hit */
-  atlas: Record<string, number>;
+  /** SOC 2 TSC controls hit */
+  soc2: Record<string, number>;
+  /** OWASP ASVS controls hit */
+  asvs: Record<string, number>;
   /** Total findings with compliance mappings */
   mappedFindings: number;
   /** Total findings without compliance mappings */
   unmappedFindings: number;
 }
 
-// Build lookup map for fast access
-const CWE_TO_COMPLIANCE = new Map<string, ComplianceMapping>();
-for (const mapping of COMPLIANCE_MAPPINGS) {
-  CWE_TO_COMPLIANCE.set(mapping.cweId, mapping);
-}
-
 /**
  * Enrich a list of findings with compliance framework references.
+ * Attaches `complianceControls` directly to each Finding.
  */
-export function enrichFindings(findings: Finding[]): ComplianceFinding[] {
+export function enrichFindings(findings: Finding[]): Finding[] {
   return findings.map((finding) => {
-    if (!finding.cweId) return finding as ComplianceFinding;
+    if (!finding.cweId) return finding;
 
-    const mapping = CWE_TO_COMPLIANCE.get(finding.cweId);
-    if (!mapping) return finding as ComplianceFinding;
+    const controls = CWE_COMPLIANCE_MAP[finding.cweId];
+    if (!controls || controls.length === 0) return finding;
 
     return {
       ...finding,
-      compliance: {
-        owasp: mapping.owasp,
-        nist: mapping.nist,
-        atlas: mapping.atlas,
-      },
+      complianceControls: controls,
     };
   });
 }
@@ -58,31 +38,33 @@ export function enrichFindings(findings: Finding[]): ComplianceFinding[] {
 /**
  * Generate a compliance summary from enriched findings.
  */
-export function generateComplianceSummary(findings: ComplianceFinding[]): ComplianceSummary {
-  const owasp: Record<string, number> = {};
+export function generateComplianceSummary(findings: Finding[]): ComplianceSummary {
   const nist: Record<string, number> = {};
-  const atlas: Record<string, number> = {};
+  const soc2: Record<string, number> = {};
+  const asvs: Record<string, number> = {};
   let mappedFindings = 0;
   let unmappedFindings = 0;
 
   for (const finding of findings) {
-    if (finding.compliance) {
+    if (finding.complianceControls && finding.complianceControls.length > 0) {
       mappedFindings++;
-      for (const cat of finding.compliance.owasp) {
-        owasp[cat] = (owasp[cat] ?? 0) + 1;
-      }
-      for (const ctrl of finding.compliance.nist) {
-        nist[ctrl] = (nist[ctrl] ?? 0) + 1;
-      }
-      for (const tech of finding.compliance.atlas) {
-        atlas[tech] = (atlas[tech] ?? 0) + 1;
+      for (const control of finding.complianceControls) {
+        switch (control.framework) {
+          case "NIST SP 800-171":
+            nist[control.controlId] = (nist[control.controlId] ?? 0) + 1;
+            break;
+          case "SOC 2 TSC":
+            soc2[control.controlId] = (soc2[control.controlId] ?? 0) + 1;
+            break;
+          case "OWASP ASVS":
+            asvs[control.controlId] = (asvs[control.controlId] ?? 0) + 1;
+            break;
+        }
       }
     } else {
       unmappedFindings++;
     }
   }
 
-  return { owasp, nist, atlas, mappedFindings, unmappedFindings };
+  return { nist, soc2, asvs, mappedFindings, unmappedFindings };
 }
-
-// TODO: add support for SOC2 and HIPAA mappings once we have the data

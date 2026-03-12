@@ -18,23 +18,27 @@ describe("Compliance Enricher", () => {
     const findings = [{ ...baseFinding, cweId: "CWE-918" }];
     const enriched = enrichFindings(findings);
 
-    expect(enriched[0].compliance).toBeDefined();
-    expect(enriched[0].compliance!.owasp).toContain("A10:2021 Server-Side Request Forgery");
-    expect(enriched[0].compliance!.nist).toContain("SC-7");
+    expect(enriched[0].complianceControls).toBeDefined();
+    expect(enriched[0].complianceControls!.length).toBeGreaterThan(0);
+
+    const frameworks = enriched[0].complianceControls!.map((c) => c.framework);
+    expect(frameworks).toContain("NIST SP 800-171");
+    expect(frameworks).toContain("SOC 2 TSC");
+    expect(frameworks).toContain("OWASP ASVS");
   });
 
   test("leaves finding without CWE unmapped", () => {
     const findings = [baseFinding];
     const enriched = enrichFindings(findings);
 
-    expect(enriched[0].compliance).toBeUndefined();
+    expect(enriched[0].complianceControls).toBeUndefined();
   });
 
   test("leaves finding with unknown CWE unmapped", () => {
     const findings = [{ ...baseFinding, cweId: "CWE-99999" }];
     const enriched = enrichFindings(findings);
 
-    expect(enriched[0].compliance).toBeUndefined();
+    expect(enriched[0].complianceControls).toBeUndefined();
   });
 
   test("generates correct compliance summary", () => {
@@ -49,9 +53,10 @@ describe("Compliance Enricher", () => {
 
     expect(summary.mappedFindings).toBe(2);
     expect(summary.unmappedFindings).toBe(1);
-    expect(summary.owasp["A03:2021 Injection"]).toBe(1);
-    expect(summary.owasp["A10:2021 Server-Side Request Forgery"]).toBe(1);
-    expect(summary.nist["SI-10"]).toBe(2); // Both CWE-918 and CWE-78 map to SI-10
+    // Both CWE-918 and CWE-78 should map to NIST SP 800-171 controls
+    expect(Object.keys(summary.nist).length).toBeGreaterThan(0);
+    expect(Object.keys(summary.soc2).length).toBeGreaterThan(0);
+    expect(Object.keys(summary.asvs).length).toBeGreaterThan(0);
   });
 
   test("handles empty findings list", () => {
@@ -60,6 +65,19 @@ describe("Compliance Enricher", () => {
 
     expect(summary.mappedFindings).toBe(0);
     expect(summary.unmappedFindings).toBe(0);
-    expect(Object.keys(summary.owasp)).toHaveLength(0);
+    expect(Object.keys(summary.nist)).toHaveLength(0);
+  });
+
+  test("complianceControls have correct structure", () => {
+    const findings = [{ ...baseFinding, cweId: "CWE-78" }];
+    const enriched = enrichFindings(findings);
+
+    const controls = enriched[0].complianceControls!;
+    for (const control of controls) {
+      expect(control.framework).toBeTruthy();
+      expect(control.controlId).toBeTruthy();
+      expect(control.controlTitle).toBeTruthy();
+      expect(control.requirement).toBeTruthy();
+    }
   });
 });

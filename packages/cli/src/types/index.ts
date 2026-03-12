@@ -1,6 +1,7 @@
 export {
   Severity,
   CheckStatus,
+  type ComplianceControl,
   type Finding,
   type CheckResult,
 } from "./finding.js";

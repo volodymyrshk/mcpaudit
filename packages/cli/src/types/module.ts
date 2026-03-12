@@ -20,6 +20,10 @@ export interface ModuleContext {
   activeMode: boolean;
   /** Verbose logging enabled */
   verbose: boolean;
+  /** Timeout per active probe in ms (default: 5000) */
+  probeTimeout?: number;
+  /** Delay between active probes in ms (default: 100) */
+  probeDelay?: number;
 }
 
 /**

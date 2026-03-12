@@ -257,7 +257,7 @@ describe("ActiveFuzzerModule", () => {
     });
   });
 
-  describe("oversized input (AF-005)", () => {
+  describe("oversized input (AF-006)", () => {
     test("detects missing length limits when server accepts oversized input", async () => {
       const callTool = async () => {
         return "Processed successfully";
@@ -266,7 +266,7 @@ describe("ActiveFuzzerModule", () => {
       const context = makeContext([safeTool], callTool);
       const results = await module.run(context);
 
-      const oversizedCheck = results.find((r) => r.id === "AF-005-get_weather");
+      const oversizedCheck = results.find((r) => r.id === "AF-006-get_weather");
       expect(oversizedCheck).toBeDefined();
       expect(oversizedCheck!.status).toBe(CheckStatus.WARN);
       expect(oversizedCheck!.finding?.severity).toBe(Severity.MEDIUM);
@@ -281,7 +281,7 @@ describe("ActiveFuzzerModule", () => {
       const context = makeContext([safeTool], callTool);
       const results = await module.run(context);
 
-      const oversizedCheck = results.find((r) => r.id === "AF-005-get_weather");
+      const oversizedCheck = results.find((r) => r.id === "AF-006-get_weather");
       expect(oversizedCheck).toBeDefined();
       expect(oversizedCheck!.status).toBe(CheckStatus.PASS);
     });
@@ -300,7 +300,7 @@ describe("ActiveFuzzerModule", () => {
       const context = makeContext(manyTools, callTool);
       const results = await module.run(context);
 
-      const oversizedChecks = results.filter((r) => r.id.startsWith("AF-005-"));
+      const oversizedChecks = results.filter((r) => r.id.startsWith("AF-006-"));
       // Should only test first 3 tools
       expect(oversizedChecks.length).toBe(3);
     });

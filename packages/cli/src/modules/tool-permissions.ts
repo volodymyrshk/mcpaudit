@@ -6,6 +6,7 @@ import {
   type CheckResult,
   type ToolInfo,
 } from "../types/index.js";
+import { DANGEROUS_PARAM_PATTERNS } from "../utils/patterns.js";
 
 /**
  * Dangerous tool name patterns that indicate potentially high-risk operations.
@@ -17,17 +18,6 @@ const DANGEROUS_NAME_PATTERNS = [
   { pattern: /fetch|request|http|curl|wget|download|get_url/i, category: "network-access" },
   { pattern: /sql|query|database|db_/i, category: "database-access" },
   { pattern: /admin|root|sudo|privilege|escalat/i, category: "elevated-access" },
-];
-
-/**
- * Dangerous parameter name patterns in tool input schemas.
- */
-const DANGEROUS_PARAM_PATTERNS = [
-  { pattern: /^(command|cmd|exec|shell|script|code)$/i, risk: "command-injection" },
-  { pattern: /^(path|file|filepath|filename|dir|directory)$/i, risk: "path-traversal" },
-  { pattern: /^(url|uri|endpoint|href|link|src|webhook|callback)$/i, risk: "ssrf" },
-  { pattern: /^(query|sql|statement|expression)$/i, risk: "injection" },
-  { pattern: /^(html|template|body|content|markup)$/i, risk: "xss" },
 ];
 
 /**
@@ -145,7 +135,7 @@ export class ToolPermissionsModule implements AuditModule {
         },
         remediation:
           "Add clear, accurate descriptions to all tools explaining their purpose, side effects, and any security implications.",
-        cweId: "CWE-1059",
+        cweId: "CWE-710",
       },
     };
   }
@@ -185,8 +175,8 @@ export class ToolPermissionsModule implements AuditModule {
 
       const cweMap: Record<string, string> = {
         "command-execution": "CWE-78",
-        "destructive": "CWE-862",
-        "write-operations": "CWE-862",
+        "destructive": "CWE-912",
+        "write-operations": "CWE-732",
         "network-access": "CWE-918",
         "database-access": "CWE-89",
         "elevated-access": "CWE-269",
@@ -348,7 +338,7 @@ export class ToolPermissionsModule implements AuditModule {
           },
           remediation:
             "Add annotations to all tools: readOnlyHint for read-only tools, destructiveHint for tools that modify state, and openWorldHint for tools that access external systems.",
-          cweId: "CWE-1059",
+          cweId: "CWE-710",
         },
       });
     } else if (tools.length > 0) {

@@ -526,7 +526,7 @@ export class SchemaManipulationModule implements AuditModule {
         remediation:
           "Review long tool descriptions for hidden instructions. Keep descriptions concise " +
           "and focused on the tool's purpose. Consider length limits for tool descriptions.",
-        cweId: "CWE-400",
+        cweId: "CWE-94",
       },
     };
   }

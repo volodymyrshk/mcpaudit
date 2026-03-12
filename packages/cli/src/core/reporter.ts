@@ -167,29 +167,29 @@ function outputCompliance(report: ScanReport): void {
   console.log(chalk.dim("  ─".repeat(30)));
   console.log();
 
-  // OWASP Top 10
-  if (Object.keys(compliance.owasp).length > 0) {
-    console.log(chalk.bold("  OWASP Top 10 2021:"));
-    for (const [category, count] of Object.entries(compliance.owasp).sort((a, b) => b[1] - a[1])) {
-      console.log(chalk.yellow(`    ${category}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
-    }
-    console.log();
-  }
-
-  // NIST 800-53
+  // NIST SP 800-171
   if (Object.keys(compliance.nist).length > 0) {
-    console.log(chalk.bold("  NIST 800-53 Rev 5:"));
+    console.log(chalk.bold("  NIST SP 800-171:"));
     for (const [control, count] of Object.entries(compliance.nist).sort((a, b) => b[1] - a[1])) {
       console.log(chalk.cyan(`    ${control}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
     }
     console.log();
   }
 
-  // MITRE ATLAS
-  if (Object.keys(compliance.atlas).length > 0) {
-    console.log(chalk.bold("  MITRE ATLAS:"));
-    for (const [technique, count] of Object.entries(compliance.atlas).sort((a, b) => b[1] - a[1])) {
-      console.log(chalk.magenta(`    ${technique}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
+  // SOC 2 TSC
+  if (Object.keys(compliance.soc2).length > 0) {
+    console.log(chalk.bold("  SOC 2 TSC:"));
+    for (const [control, count] of Object.entries(compliance.soc2).sort((a, b) => b[1] - a[1])) {
+      console.log(chalk.yellow(`    ${control}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
+    }
+    console.log();
+  }
+
+  // OWASP ASVS
+  if (Object.keys(compliance.asvs).length > 0) {
+    console.log(chalk.bold("  OWASP ASVS v4.0:"));
+    for (const [control, count] of Object.entries(compliance.asvs).sort((a, b) => b[1] - a[1])) {
+      console.log(chalk.magenta(`    ${control}`) + chalk.dim(` (${count} finding${count > 1 ? "s" : ""})`));
     }
     console.log();
   }

@@ -10,6 +10,20 @@ export enum Severity {
 }
 
 /**
+ * A compliance framework control mapped to a finding.
+ */
+export interface ComplianceControl {
+  /** Framework name (e.g., "NIST SP 800-171", "SOC 2 TSC", "OWASP ASVS") */
+  framework: string;
+  /** Control identifier (e.g., "3.1.1", "CC6.1", "V5.1") */
+  controlId: string;
+  /** Human-readable control title */
+  controlTitle: string;
+  /** Requirement description */
+  requirement: string;
+}
+
+/**
  * A single security finding discovered during an audit.
  */
 export interface Finding {
@@ -31,6 +45,8 @@ export interface Finding {
   toolName?: string;
   /** CWE ID if mappable */
   cweId?: string;
+  /** Compliance controls this finding maps to */
+  complianceControls?: ComplianceControl[];
 }
 
 /**

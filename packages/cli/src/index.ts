@@ -59,8 +59,18 @@ program
     "Save report to file (use .sarif extension for SARIF format)"
   )
   .option(
+    "--probe-timeout <ms>",
+    "Timeout per active probe in milliseconds",
+    "5000"
+  )
+  .option(
+    "--probe-delay <ms>",
+    "Delay between active probes in milliseconds",
+    "100"
+  )
+  .option(
     "--compliance <frameworks...>",
-    "Enable compliance mapping (owasp, nist, atlas, or all)"
+    "Enable compliance mapping (nist, soc2, asvs, or all)"
   )
   .option(
     "--accept",
@@ -94,6 +104,8 @@ program
       timeout: parseInt(opts.timeout, 10),
       output: opts.output,
       compliance: opts.compliance,
+      probeTimeout: parseInt(opts.probeTimeout, 10),
+      probeDelay: parseInt(opts.probeDelay, 10),
     });
   });
 

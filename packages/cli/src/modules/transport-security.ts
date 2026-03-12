@@ -69,7 +69,7 @@ export class TransportSecurityModule implements AuditModule {
           evidence: { declaredCapabilities: declaredCaps },
           remediation:
             "Servers should explicitly declare their capabilities (tools, resources, prompts) during initialization to enable proper client-side security decisions.",
-          cweId: "CWE-1059",
+          cweId: "CWE-710",
         },
       });
     } else {
@@ -110,7 +110,7 @@ export class TransportSecurityModule implements AuditModule {
           remediation:
             "Only grant sampling capability to fully trusted servers. Implement client-side guards: " +
             "rate limiting on sampling requests, content filtering on prompts, and user approval for sampling calls.",
-          cweId: "CWE-441",
+          cweId: "CWE-200",
         },
       };
     }
@@ -188,7 +188,7 @@ export class TransportSecurityModule implements AuditModule {
             "Clients should re-validate the tool list after each tools/list_changed notification. " +
             "Consider implementing a tool allowlist that restricts which tools can be called " +
             "regardless of dynamic changes. Alert users when the tool list changes mid-session.",
-          cweId: "CWE-494",
+          cweId: "CWE-345",
         },
       };
     }

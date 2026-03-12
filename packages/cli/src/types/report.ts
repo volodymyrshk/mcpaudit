@@ -138,9 +138,9 @@ export interface ScanReport {
   summary: ReportSummary;
   /** Optional compliance summary */
   compliance?: {
-    owasp: Record<string, number>;
     nist: Record<string, number>;
-    atlas: Record<string, number>;
+    soc2: Record<string, number>;
+    asvs: Record<string, number>;
     mappedFindings: number;
     unmappedFindings: number;
   };

@@ -12,7 +12,7 @@ import { SsrfDetectionModule } from "../modules/ssrf-detection.js";
 import { ActiveFuzzerModule } from "../modules/active-fuzzer.js";
 import { SchemaManipulationModule } from "../modules/schema-manipulation.js";
 import { ContextExtractionModule } from "../modules/context-extraction.js";
-import { enrichFindings, generateComplianceSummary, type ComplianceFinding } from "../compliance/compliance-enricher.js";
+import { enrichFindings, generateComplianceSummary } from "../compliance/compliance-enricher.js";
 import type { AuditModule, ScanReport, TransportConfig } from "../types/index.js";
 
 const CLI_VERSION = "0.1.0-alpha.1";
@@ -34,8 +34,12 @@ export interface ScanOptions {
   timeout: number;
   /** Output file path for saving the report */
   output?: string;
-  /** Compliance frameworks to map (owasp, nist, atlas, or all) */
+  /** Compliance frameworks to map (nist, soc2, asvs, or all) */
   compliance?: string[];
+  /** Timeout per active probe in ms */
+  probeTimeout?: number;
+  /** Delay between active probes in ms */
+  probeDelay?: number;
 }
 
 /**
@@ -153,6 +157,8 @@ export async function executeScan(options: ScanOptions): Promise<void> {
         : undefined,
       activeMode: options.active,
       verbose: options.verbose,
+      probeTimeout: options.probeTimeout,
+      probeDelay: options.probeDelay,
       onProgress: (moduleId, status) => {
         if (isTerminal) {
           switch (status) {
@@ -176,11 +182,11 @@ export async function executeScan(options: ScanOptions): Promise<void> {
     const durationMs = Math.round(performance.now() - startTime);
 
     // ── Step 4b: Compliance enrichment (if --compliance flag set)
-    let complianceFindings: ComplianceFinding[] | undefined;
+    let enrichedFindings = allFindings;
     let complianceSummary;
     if (options.compliance && options.compliance.length > 0) {
-      complianceFindings = enrichFindings(allFindings);
-      complianceSummary = generateComplianceSummary(complianceFindings);
+      enrichedFindings = enrichFindings(allFindings);
+      complianceSummary = generateComplianceSummary(enrichedFindings);
     }
 
     const transportConfig: TransportConfig = {
@@ -198,7 +204,7 @@ export async function executeScan(options: ScanOptions): Promise<void> {
       transport: transportConfig,
       server: capabilities,
       modules: moduleResults,
-      findings: allFindings,
+      findings: enrichedFindings,
       summary,
       ...(complianceSummary ? { compliance: complianceSummary } : {}),
     };
