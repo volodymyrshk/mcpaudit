@@ -12,6 +12,19 @@ import { scoreToGrade, scoreToColor } from "./scorer.js";
 
 export type OutputFormat = "terminal" | "json";
 
+// ─── ASCII Art Logo ──────────────────────────────────────────────────────────
+
+const LOGO = `
+ /$$      /$$  /$$$$$$  /$$$$$$$         /$$$$$$                  /$$ /$$   /$$
+| $$$    /$$$ /$$__  $$| $$__  $$       /$$__  $$                | $$|__/  | $$
+| $$$$  /$$$$| $$  \\__/| $$  \\ $$      | $$  \\ $$ /$$   /$$  /$$$$$$$ /$$ /$$$$$$
+| $$ $$/$$ $$| $$      | $$$$$$$/      | $$$$$$$$| $$  | $$ /$$__  $$| $$|_  $$_/
+| $$  $$$| $$| $$      | $$____/       | $$__  $$| $$  | $$| $$  | $$| $$  | $$
+| $$\\  $ | $$| $$    $$| $$            | $$  | $$| $$  | $$| $$  | $$| $$  | $$ /$$
+| $$ \\/  | $$|  $$$$$$/| $$            | $$  | $$|  $$$$$$/|  $$$$$$$| $$  |  $$$$/
+|__/     |__/ \\______/ |__/            |__/  |__/ \\______/  \\_______/|__/   \\___/
+`;
+
 /**
  * Format and output a scan report.
  */
@@ -39,10 +52,9 @@ function outputJson(report: ScanReport): void {
 function outputTerminal(report: ScanReport): void {
   const { server, modules, summary } = report;
 
-  // Header
-  console.log();
-  console.log(chalk.bold.cyan("  vs-mcpaudit Security Report"));
-  console.log(chalk.dim("  ─".repeat(30)));
+  // Logo & Header
+  console.log(chalk.cyan(LOGO));
+  console.log(chalk.dim("  ── MCP Server Security Scanner ──────────────────────────────────────────────"));
   console.log();
 
   // Server info
@@ -66,9 +78,11 @@ function outputTerminal(report: ScanReport): void {
   // Compliance mapping
   outputCompliance(report);
 
-  // Security score
-  outputScore(summary.securityScore);
-  console.log();
+  // Security score gauge
+  outputScore(summary.securityScore, summary);
+
+  // Traction footer
+  outputFooter();
 }
 
 function outputModuleResult(result: ModuleResult): void {
@@ -128,35 +142,6 @@ function outputSummary(summary: typeof ScanReport.prototype extends never ? neve
 
   console.log(table.toString());
   console.log();
-
-  // Findings breakdown
-  if (
-    summary.findingsBySeverity[Severity.CRITICAL] > 0 ||
-    summary.findingsBySeverity[Severity.HIGH] > 0
-  ) {
-    console.log(chalk.bold("  Findings:"));
-    if (summary.findingsBySeverity[Severity.CRITICAL] > 0) {
-      console.log(
-        chalk.red(`    ${summary.findingsBySeverity[Severity.CRITICAL]} CRITICAL`)
-      );
-    }
-    if (summary.findingsBySeverity[Severity.HIGH] > 0) {
-      console.log(
-        chalk.red(`    ${summary.findingsBySeverity[Severity.HIGH]} HIGH`)
-      );
-    }
-    if (summary.findingsBySeverity[Severity.MEDIUM] > 0) {
-      console.log(
-        chalk.yellow(`    ${summary.findingsBySeverity[Severity.MEDIUM]} MEDIUM`)
-      );
-    }
-    if (summary.findingsBySeverity[Severity.LOW] > 0) {
-      console.log(
-        chalk.dim(`    ${summary.findingsBySeverity[Severity.LOW]} LOW`)
-      );
-    }
-    console.log();
-  }
 }
 
 function outputCompliance(report: ScanReport): void {
@@ -200,16 +185,44 @@ function outputCompliance(report: ScanReport): void {
   console.log();
 }
 
-function outputScore(score: number): void {
+function outputScore(score: number, summary: ScanReport["summary"]): void {
   const grade = scoreToGrade(score);
   const color = scoreToColor(score);
   const colorFn =
     color === "green" ? chalk.green : color === "yellow" ? chalk.yellow : chalk.red;
 
-  const scoreDisplay = colorFn.bold(`${score}/100`);
-  const gradeDisplay = colorFn.bold(grade);
+  // Score header
+  console.log(chalk.bold("  Security Score"));
+  console.log();
 
-  console.log(`  Security Score: ${scoreDisplay} (Grade: ${gradeDisplay})`);
+  // Visual gauge bar (30 chars wide)
+  const BAR_WIDTH = 30;
+  const filled = Math.round((score / 100) * BAR_WIDTH);
+  const empty = BAR_WIDTH - filled;
+  const bar = colorFn("█".repeat(filled)) + chalk.dim("░".repeat(empty));
+  const scoreDisplay = colorFn.bold(`${score}/100`);
+  const gradeDisplay = colorFn.bold(`Grade: ${grade}`);
+
+  console.log(`    ${bar}  ${scoreDisplay}  ${gradeDisplay}`);
+  console.log();
+
+  // Inline severity summary
+  const s = summary.findingsBySeverity;
+  const parts = [
+    chalk.red(`  CRITICAL: ${s[Severity.CRITICAL]}`),
+    chalk.red(`  HIGH: ${s[Severity.HIGH]}`),
+    chalk.yellow(`  WARN: ${summary.warnings}`),
+    chalk.green(`  PASS: ${summary.passed}`),
+  ];
+  console.log(`  ` + parts.join("  "));
+}
+
+function outputFooter(): void {
+  console.log();
+  console.log(chalk.dim("  ─────────────────────────────────────────────────────────────────────────────"));
+  console.log(chalk.bold("  Secured your MCP setup? Share your scorecard!"));
+  console.log(chalk.cyan("  github.com/vs-mcpaudit/vs-mcpaudit"));
+  console.log();
 }
 
 /**
