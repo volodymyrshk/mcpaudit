@@ -1,0 +1,67 @@
+# MCP Server Security Scan
+# Reusable GitHub Action template for scanning MCP servers on every PR.
+#
+# Usage: Copy this file into your project's .github/workflows/ directory
+# and customize the MCP_SERVER_COMMAND to match your server.
+#
+# For SARIF integration with GitHub Code Scanning, uncomment the
+# upload-sarif step below.
+
+name: MCP Security Scan
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+  workflow_dispatch: # Allow manual runs
+
+env:
+  # Customize this to your MCP server command
+  MCP_SERVER_COMMAND: "npx -y @modelcontextprotocol/server-filesystem /tmp"
+
+jobs:
+  mcp-audit:
+    name: MCP Server Audit
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write  # Required for SARIF upload
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install vs-mcpaudit
+        run: bun add -g vs-mcpaudit
+
+      - name: Run passive security scan
+        run: |
+          vs-mcpaudit scan \
+            -s "${{ env.MCP_SERVER_COMMAND }}" \
+            --accept \
+            --ci \
+            --compliance all \
+            -o results.sarif
+        continue-on-error: true
+
+      # Optional: Upload SARIF to GitHub Code Scanning
+      # Uncomment to enable security alerts in the Security tab
+      # - name: Upload SARIF
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     sarif_file: results.sarif
+      #     category: mcp-audit
+
+      - name: Upload scan report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mcp-audit-report
+          path: results.sarif
+          retention-days: 30

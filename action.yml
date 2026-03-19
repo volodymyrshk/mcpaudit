@@ -1,0 +1,163 @@
+name: "vs-mcpaudit — MCP Server Security Scanner"
+description: "Scan MCP servers for security vulnerabilities with 94 checks across 12 modules. Get a scored report with CWE mappings and compliance controls."
+author: "vs-mcpaudit"
+
+branding:
+  icon: "shield"
+  color: "purple"
+
+inputs:
+  server:
+    description: "MCP server command to scan (e.g., 'npx -y @modelcontextprotocol/server-filesystem /tmp')"
+    required: true
+  profile:
+    description: "Scan profile: quick (passive only), standard (passive+active), enterprise (full suite)"
+    required: false
+    default: "standard"
+  fail-below:
+    description: "Fail the action if score is below this threshold (0-100). Set to 0 to never fail."
+    required: false
+    default: "0"
+  format:
+    description: "Output format: terminal, json, html, markdown"
+    required: false
+    default: "terminal"
+  sarif:
+    description: "Path to save SARIF report (enables GitHub Code Scanning integration)"
+    required: false
+    default: ""
+  output:
+    description: "Path to save the scan report"
+    required: false
+    default: ""
+  compliance:
+    description: "Compliance frameworks to map (nist, soc2, asvs, all)"
+    required: false
+    default: ""
+  rules:
+    description: "Path to custom rules YAML file for policy-as-code checks"
+    required: false
+    default: ""
+  min-severity:
+    description: "Only report findings at or above this severity (CRITICAL, HIGH, MEDIUM, LOW)"
+    required: false
+    default: ""
+  modules:
+    description: "Space-separated list of module IDs to run (default: all)"
+    required: false
+    default: ""
+
+outputs:
+  score:
+    description: "Security score (0-100)"
+    value: ${{ steps.scan.outputs.score }}
+  grade:
+    description: "Letter grade (A+, A, B, C, D, F)"
+    value: ${{ steps.scan.outputs.grade }}
+  findings:
+    description: "Total number of findings"
+    value: ${{ steps.scan.outputs.findings }}
+  critical:
+    description: "Number of CRITICAL findings"
+    value: ${{ steps.scan.outputs.critical }}
+  high:
+    description: "Number of HIGH findings"
+    value: ${{ steps.scan.outputs.high }}
+  report-path:
+    description: "Path to the saved report file"
+    value: ${{ steps.scan.outputs.report_path }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
+    - name: Install vs-mcpaudit
+      shell: bash
+      run: bun add -g vs-mcpaudit@latest
+
+    - name: Run MCP Security Scan
+      id: scan
+      shell: bash
+      env:
+        INPUT_SERVER: ${{ inputs.server }}
+        INPUT_PROFILE: ${{ inputs.profile }}
+        INPUT_FAIL_BELOW: ${{ inputs.fail-below }}
+        INPUT_FORMAT: ${{ inputs.format }}
+        INPUT_SARIF: ${{ inputs.sarif }}
+        INPUT_OUTPUT: ${{ inputs.output }}
+        INPUT_COMPLIANCE: ${{ inputs.compliance }}
+        INPUT_RULES: ${{ inputs.rules }}
+        INPUT_MIN_SEVERITY: ${{ inputs.min-severity }}
+        INPUT_MODULES: ${{ inputs.modules }}
+      run: |
+        set +e
+
+        # Build command
+        CMD="vs-mcpaudit scan -s \"$INPUT_SERVER\" --profile $INPUT_PROFILE --accept --ci"
+
+        # Optional flags
+        if [ -n "$INPUT_COMPLIANCE" ]; then
+          CMD="$CMD --compliance $INPUT_COMPLIANCE"
+        fi
+        if [ -n "$INPUT_RULES" ]; then
+          CMD="$CMD --rules $INPUT_RULES"
+        fi
+        if [ -n "$INPUT_MIN_SEVERITY" ]; then
+          CMD="$CMD --min-severity $INPUT_MIN_SEVERITY"
+        fi
+        if [ -n "$INPUT_MODULES" ]; then
+          CMD="$CMD --modules $INPUT_MODULES"
+        fi
+        if [ "$INPUT_FAIL_BELOW" != "0" ]; then
+          CMD="$CMD --fail-below $INPUT_FAIL_BELOW"
+        fi
+
+        # Determine output path
+        REPORT_PATH="${INPUT_OUTPUT:-report.json}"
+        CMD="$CMD -o $REPORT_PATH"
+
+        # Run scan
+        eval $CMD
+        SCAN_EXIT=$?
+
+        # Also generate SARIF if requested
+        if [ -n "$INPUT_SARIF" ]; then
+          eval "vs-mcpaudit scan -s \"$INPUT_SERVER\" --profile $INPUT_PROFILE --accept --ci -o $INPUT_SARIF" || true
+        fi
+
+        # Extract metrics from JSON report
+        if [ -f "$REPORT_PATH" ]; then
+          SCORE=$(cat "$REPORT_PATH" | grep -o '"securityScore":[0-9]*' | head -1 | cut -d: -f2)
+          FINDINGS=$(cat "$REPORT_PATH" | grep -o '"findings":\[' | wc -l | tr -d ' ')
+          CRITICAL=$(cat "$REPORT_PATH" | grep -o '"CRITICAL":[0-9]*' | head -1 | cut -d: -f2)
+          HIGH=$(cat "$REPORT_PATH" | grep -o '"HIGH":[0-9]*' | head -1 | cut -d: -f2)
+
+          # Compute grade
+          if [ "${SCORE:-0}" -ge 95 ]; then GRADE="A+";
+          elif [ "${SCORE:-0}" -ge 90 ]; then GRADE="A";
+          elif [ "${SCORE:-0}" -ge 80 ]; then GRADE="B";
+          elif [ "${SCORE:-0}" -ge 70 ]; then GRADE="C";
+          elif [ "${SCORE:-0}" -ge 60 ]; then GRADE="D";
+          else GRADE="F"; fi
+
+          echo "score=${SCORE:-0}" >> $GITHUB_OUTPUT
+          echo "grade=${GRADE}" >> $GITHUB_OUTPUT
+          echo "findings=${FINDINGS:-0}" >> $GITHUB_OUTPUT
+          echo "critical=${CRITICAL:-0}" >> $GITHUB_OUTPUT
+          echo "high=${HIGH:-0}" >> $GITHUB_OUTPUT
+          echo "report_path=${REPORT_PATH}" >> $GITHUB_OUTPUT
+        fi
+
+        exit $SCAN_EXIT
+
+    - name: Upload SARIF (if generated)
+      if: inputs.sarif != '' && always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: ${{ inputs.sarif }}
+        category: vs-mcpaudit
+      continue-on-error: true

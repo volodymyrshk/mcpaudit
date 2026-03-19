@@ -29,3 +29,11 @@ coverage/
 # Compiled binaries
 vs-mcpaudit
 vs-mcpaudit-*
+
+# Scan artifacts
+*.sarif
+*.sarif.json
+badge.svg
+report.html
+audit-report.html
+audit.html

@@ -24,6 +24,10 @@ export interface ModuleContext {
   probeTimeout?: number;
   /** Delay between active probes in ms (default: 100) */
   probeDelay?: number;
+  /** Progress callback for granular status updates during active scans */
+  onProgress?: (message: string) => void;
+  /** Custom payloads loaded from --payloads file */
+  customPayloads?: Array<{ value: string; label: string }>;
 }
 
 /**
